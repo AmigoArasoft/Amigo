@@ -25,4 +25,5 @@ class Materia extends Model{
     public function especificaciones(){
         return $this->belongsToMany(Especificacion::class, 'material_especificacion', 'material_id', 'especificacion_id');
     }
+    
 }

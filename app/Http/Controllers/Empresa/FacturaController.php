@@ -45,13 +45,13 @@ class FacturaController extends Controller{
         $fecha = ($request->fecha) ? $request->fecha : Carbon::now()->firstOfMonth()->toDateString();
         $desde = ($request->desde) ? $request->desde : Carbon::now()->firstOfMonth()->subMonth()->toDateString();
         $hasta = ($request->hasta) ? $request->hasta : Carbon::now()->firstOfMonth()->subDay()->toDateString();
-        $viajes = Viaje::selectRaw('material_id, materials.nombre, count(valor) as cuenta, avg(valor) as valor, sum(volumen) as volumen, sum(total) as total')
+        $viajes = Viaje::selectRaw('material_id, materias.nombre, count(valor) as cuenta, avg(valor) as valor, sum(volumen) as volumen, sum(total) as total')
                 ->where('operador_id', $ope)
                 ->whereBetween('fecha', [$desde, $hasta])
                 ->where('eliminado', 0)
                 ->whereNull('factura_id')
-                ->groupBy('material_id', 'materials.nombre')
-                ->join('materials', 'viajes.material_id', '=', 'materials.id')
+                ->groupBy('material_id', 'materias.nombre')
+                ->join('materias', 'viajes.material_id', '=', 'materias.id')
                 ->get();
         return view('mina.empresa.factura.index', ['accion' => 'Nuevo']
             , compact('operadores', 'operador', 'ope', 'fecha', 'desde', 'hasta', 'viajes')
@@ -92,13 +92,13 @@ class FacturaController extends Controller{
             $fecha = ($request->fecha) ? $request->fecha : $dato->fecha;
             $desde = ($request->desde) ? $request->desde : $dato->desde;
             $hasta = ($request->hasta) ? $request->hasta : $dato->hasta;
-            $viajes = Viaje::selectRaw('material_id, materials.nombre, count(valor) as cuenta, avg(valor) as valor, sum(volumen) as volumen, sum(total) as total')
+            $viajes = Viaje::selectRaw('material_id, materias.nombre, count(valor) as cuenta, avg(valor) as valor, sum(volumen) as volumen, sum(total) as total')
                 ->where('operador_id', $ope)
                 ->whereBetween('fecha', [$desde, $hasta])
                 ->where('eliminado', 0)
                 ->whereNull('factura_id')
-                ->groupBy('material_id', 'materials.nombre')
-                ->join('materials', 'viajes.material_id', '=', 'materials.id')
+                ->groupBy('material_id', 'materias.nombre')
+                ->join('materias', 'viajes.material_id', '=', 'materias.id')
                 ->get();
         }
         return view('mina.empresa.factura.index', ['accion' => 'Editar'], compact('dato', 'operadores', 'operador', 'ope', 'fecha', 'desde', 'hasta', 'viajes'));
@@ -139,10 +139,10 @@ class FacturaController extends Controller{
     }
 
     public function pdf(Request $request, $id){
-        $viajes = Viaje::select('viajes.fecha', 'vehiculos.placa', 'materials.nombre as material', 'parametros.nombre as submaterial', 'viajes.volumen')
+        $viajes = Viaje::select('viajes.fecha', 'vehiculos.placa', 'materias.nombre as material', 'gruposubmats.nombre as submaterial', 'viajes.volumen')
             ->join('vehiculos', 'viajes.vehiculo_id', '=', 'vehiculos.id')
-            ->join('materials', 'viajes.material_id', '=', 'materials.id')
-            ->join('parametros', 'viajes.submaterial_id', '=', 'parametros.id')
+            ->join('materias', 'viajes.material_id', '=', 'materias.id')
+            ->join('gruposubmats', 'viajes.subgrupo_id', '=', 'gruposubmats.id')
             ->where('factura_id', $id)
             ->where('eliminado', 0)
             ->where('viajes.activo', 1)->get();

@@ -9,7 +9,7 @@
             <div class="card card-widget widget-user">
                 <div class="widget-user-header bg-info">
                     <div class="widget-user-image" style="margin-left: -100px;">
-                        <img style="width: 200px;" class="img-rounded elevation-2 bg-dark" src="{{ asset('img/logo_letras_blancas.png') }}" alt="Villa Ufaz">
+                        <img style="width: 200px;" class="img-rounded elevation-2 bg-light" src="{{ asset('img/logo_letras_blancas.png') }}" alt="Villa Ufaz">
                     </div>
                     <h1 class="widget-user-username">Iniciar sesión</h1>
                     <h5 class="widget-user-desc">AMIGO</h5>

@@ -1,4 +1,7 @@
 <script>
+var gruposubmat_material = @json($subgrupo_materia);
+var materiales = @json($materiales);
+
 @foreach($operadores as $d)
     var mate_{{ $d->id }}=[
         @foreach($d->materiales->sortBy('nombre') as $m)
@@ -13,13 +16,7 @@
         @endforeach
     ];
 @endforeach
-@foreach($materiales as $m)
-    var m_{{ $m->id }}=[
-        @foreach($m->submateriales as $s)
-            [{{ $s->id }}, "{{ $s->nombre }}"],
-        @endforeach
-    ];
-@endforeach
+
 @foreach($vehiculos as $m)
     var v_{{ $m->id }}=[
         [{{ $m->tercero_id }}, "{{ $m->volumen }}", {{ $m->conductor_id }}],
@@ -59,24 +56,25 @@ function cambiaOperador(valor){
         document.forma.vehiculo_id.options[0].text = "";
     }
     document.forma.material_id.options[0].selected = true;
-    cambiaMaterial(document.getElementById('material_id').value);
+    cambiaMaterial(document.getElementById('subgrupo_id').value);
     cambiaVehiculo(document.getElementById('vehiculo_id').value);
 }
 function cambiaMaterial(valor){
     if (valor !== '') {
-        mi_valor = eval("m_" + valor[0][0]);
-        num_valor = mi_valor.length;
-        document.forma.submaterial_id.length = num_valor;
+        var subgrupoMateriales = gruposubmat_material.filter(x => x.gruposubmat_id == parseInt(valor));
+        num_valor = subgrupoMateriales.length;
+        document.forma.material_id.length = num_valor;
         for(i=0;i<num_valor;i++){
-            document.forma.submaterial_id.options[i].value = mi_valor[i][0];
-            document.forma.submaterial_id.options[i].text = mi_valor[i][1];
+            material_id = subgrupoMateriales[i].material_id;
+            document.forma.material_id.options[i].value = material_id;
+            document.forma.material_id.options[i].text = materiales[material_id];
         }
     }else{
-        document.forma.submaterial_id.length = 1;
-        document.forma.submaterial_id.options[0].value = "";
-        document.forma.submaterial_id.options[0].text = "";
+        document.forma.material_id.length = 1;
+        document.forma.material_id.options[0].value = "";
+        document.forma.material_id.options[0].text = "";
     }
-    document.forma.submaterial_id.options[0].selected = true;
+    document.forma.material_id.options[0].selected = true;
 }
 function cambiaVehiculo(valor){
     if (valor !== '') {

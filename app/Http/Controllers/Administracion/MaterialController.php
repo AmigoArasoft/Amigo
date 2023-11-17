@@ -79,13 +79,13 @@ class MaterialController extends Controller{
 
     protected function validator(array $data){
         return Validator::make($data, [
-            'nombre' => 'required|string|max:180|unique:materials',
+            'nombre' => 'required|string|max:180|unique:materias',
         ]);
     }
 
     protected function validatorUpdate(array $data, $id){
         return Validator::make($data, [
-            'nombre' => 'required|string|max:180|unique:materials,nombre,'.$id,
+            'nombre' => 'required|string|max:180|unique:materias,nombre,'.$id,
         ]);
     }
 }

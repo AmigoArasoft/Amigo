@@ -23,22 +23,22 @@
 	</div>
 	<div class="col-md-2">
 		<div class="form-group">
-			{{ Form::label('material_id', 'Material:') }}
-			{{ Form::select('material_id', $material, (!isset($dato)) ? 1 : null, ['class' => $errors->first('material_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'onchange' => 'cambiaMaterial(this.value)']) }}
-			@if($errors->has('material_id'))
+			{{ Form::label('subgrupo_id', 'Sub Grupo:') }}
+			{{ Form::select('subgrupo_id', $subgrupo, (!isset($dato)) ? 1 : null, ['class' => $errors->first('subgrupo_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'onchange' => 'cambiaMaterial(this.value)']) }}
+			@if($errors->has('subgrupo_id'))
 				<div class="invalid-feedback d-block">
-		        	{{ $errors->first('material_id') }}
+		        	{{ $errors->first('subgrupo_id') }}
 		      	</div>
 		    @endif
 		</div>
 	</div>
 	<div class="col-md-2">
 		<div class="form-group">
-			{{ Form::label('submaterial_id', 'Sub material:') }}
-			{{ Form::select('submaterial_id', $submaterial, (!isset($dato)) ? 1 : null, ['class' => $errors->first('submaterial_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
-			@if($errors->has('submaterial_id'))
+			{{ Form::label('material_id', 'Material:') }}
+			{{ Form::select('material_id', $materiales, (!isset($dato)) ? 1 : null, ['class' => $errors->first('material_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
+			@if($errors->has('material_id'))
 				<div class="invalid-feedback d-block">
-		        	{{ $errors->first('submaterial_id') }}
+		        	{{ $errors->first('material_id') }}
 		      	</div>
 		    @endif
 		</div>

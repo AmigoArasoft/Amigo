@@ -13,7 +13,7 @@ $(document).ready(function() {
             {data: 'fecha', name: 'viajes.fecha_nombre'},
             {data: 'operador', name: 'terceros.nombre'},
             {data: 'placa', name: 'vehiculos.placa'},
-            {data: 'nombre', name: 'materials.nombre'},
+            {data: 'nombre', name: 'materias.nombre'},
             {data: 'volumen', name: 'viajes.volumen', className:'text-right', render: $.fn.dataTable.render.number('.', ',', 2, '')},
             {data: 'valor', name: 'viajes.valor', className:'text-right', render: $.fn.dataTable.render.number('.', ',', 0, '$ ')},
             {data: 'total', name: 'viajes.total', className:'text-right', render: $.fn.dataTable.render.number('.', ',', 2, '$ ')},

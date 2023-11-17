@@ -7,7 +7,7 @@
         @endauth
         <li class="nav-item">
             <a href="{{ route('mina') }}">
-                <img style="height: 40px;" class="img-rounded elevation-3 bg-dark" src="{{ asset('img/logo_letras_blancas.png') }}" alt="{{ config('app.name', 'Laravel') }}">
+                <img style="height: 40px;" class="img-rounded elevation-3 bg-light" src="{{ asset('img/logo_letras_blancas.png') }}" alt="{{ config('app.name', 'Laravel') }}">
             </a>
         </li>
     </ul>

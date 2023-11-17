@@ -15,7 +15,7 @@ $(document).ready(function() {
             {data: 'fecha', name: 'viajes.fecha_nombre'},
             {data: 'operador', name: 'terceros.nombre'},
             {data: 'placa', name: 'vehiculos.placa'},
-            {data: 'nombre', name: 'materials.nombre'},
+            {data: 'nombre', name: 'materias.nombre'},
             {data: 'volumen', name: 'viajes.volumen', className:'text-right'},
             {data: 'digitador', name: 'users.name'},
             {data: 'activo', class: 'text-center', orderable: false},

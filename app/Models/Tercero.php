@@ -64,7 +64,7 @@ class Tercero extends Model{
     }
 
     public function materiales(){
-        return $this->belongsToMany(Material::class, 'tercero_material', 'tercero_id', 'material_id');
+        return $this->belongsToMany(Materia::class, 'tercero_material', 'tercero_id', 'material_id');
     }
 
     public function tarifas(){

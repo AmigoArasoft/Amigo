@@ -31,8 +31,8 @@ class Factura extends Model{
 
     public function materiales(){
         return $this->viajes()
-            ->selectRaw('material_id, materials.nombre, avg(valor) as valor, sum(volumen) as volumen, sum(total) as total')
-            ->groupBy('material_id', 'materials.nombre')
-            ->join('materials', 'viajes.material_id', '=', 'materials.id');
+            ->selectRaw('material_id, materias.nombre, avg(valor) as valor, sum(volumen) as volumen, sum(total) as total')
+            ->groupBy('material_id', 'materias.nombre')
+            ->join('materias', 'viajes.material_id', '=', 'materias.id');
     }
 }

@@ -6,7 +6,7 @@
             </li>
         @endauth
         <li class="nav-item">
-            <img style="height: 40px;" class="img-rounded elevation-3 bg-dark" src="{{ asset('img/logo_letras_blancas.png') }}" alt="{{ config('app.name', 'Laravel') }}">
+            <img style="height: 40px;" class="img-rounded elevation-3 bg-light" src="{{ asset('img/logo_letras_blancas.png') }}" alt="{{ config('app.name', 'Laravel') }}">
         </li>
     </ul>
 </nav>
