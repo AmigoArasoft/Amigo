@@ -16,8 +16,6 @@
 			        	@endcanany
 			            <th>Título</th>
 			            <th>Descripción</th>
-			            <th>Tema</th>
-			            <th>Sub tema</th>
 			            <th>Activo</th>
 			        </tr>
 			    </thead>

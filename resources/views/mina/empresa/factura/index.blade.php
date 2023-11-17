@@ -1,6 +1,6 @@
 @extends('plantilla.mina.index')
 
-@section('titulo', 'Facturas')
+@section('titulo', 'Informes')
 
 @section('vinculo')
 <li class="breadcrumb-item"><a href="{{ route('/') }}">Inicio</a></li>

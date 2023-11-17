@@ -11,8 +11,6 @@ $(document).ready(function() {
             @endcanany
     		{data: 'titulo'},
             {data: 'descripcion'},
-            {data: 'tema', name:'temas.nombre'},
-            {data: 'subtema', name:'parametros.nombre'},
             {data: 'activo', class: 'text-center', orderable: false},
     	],
     	"language": {

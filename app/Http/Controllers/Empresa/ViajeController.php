@@ -117,6 +117,10 @@ class ViajeController extends Controller{
         ->where('tarifa_gruposubmat.gruposubmat_id', $request->subgrupo_id)
         ->first();
 
+        if(!$tarifa){
+            return redirect()->route('viaje')->with('error', 'Operador debe tener tarifa asociado a los materiales');
+        }
+
         Viaje::create([
             'fecha' => $request->fecha,
             'vehiculo_id' => $request->vehiculo_id,
@@ -176,6 +180,11 @@ class ViajeController extends Controller{
         ->join('tarifa_gruposubmat', 'tarifa_gruposubmat.tarifa_id', '=', 'tercero_tarifa.tarifa_id')
         ->where('tarifa_gruposubmat.gruposubmat_id', $request->subgrupo_id)
         ->first();
+
+        if(!$tarifa){
+            return redirect()->route('viaje')->with('error', 'Operador debe tener tarifa asociado a los materiales');
+        }
+
         $dato->fill([
             'fecha' => $request->fecha,
             'vehiculo_id' => $request->vehiculo_id,
@@ -186,7 +195,7 @@ class ViajeController extends Controller{
             'subgrupo_id' => $request->subgrupo_id,
             'frente_id' => $operador->frente_id,
             'volumen' => $request->volumen,
-            'valor' => $tarifa->tarifa    
+            'valor' => $tarifa->tarifa
         ])->save();
         $vehiculo->fill([
             'conductor_id' => $request->conductor_id,

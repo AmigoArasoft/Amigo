@@ -23,9 +23,7 @@ class DocumentoController extends Controller{
     public function list(Request $request){
         if (!$request->ajax()) return redirect('/');
         return datatables()
-            ->eloquent(Documento::select('documentos.id', 'archivo', 'titulo', 'descripcion', 'temas.nombre as tema', 'parametros.nombre as subtema', 'documentos.activo')
-            ->leftJoin('temas', 'tema_id', '=', 'temas.id')
-            ->leftJoin('parametros', 'subtema_id', '=', 'parametros.id'))
+            ->eloquent(Documento::select('id', 'archivo', 'titulo', 'descripcion', 'activo'))
             ->addColumn('botones', 'mina/empresa/documento/tablaBoton')
             ->addColumn('activo', 'mina/empresa/documento/tablaActivo')
             ->rawColumns(['botones', 'activo'])
@@ -33,13 +31,7 @@ class DocumentoController extends Controller{
     }
 
     public function create(){
-        $temas = Tema::where('activo', 1)->orderBy('nombre')->get();
-        $tema = $temas->pluck('nombre', 'id');
-        $subtema = ['' => 'Seleccione...'];
-        foreach ($temas->first()->subtemas as $d) {
-            $subtema[$d->id] = $d->nombre;
-        }
-        return view('mina.empresa.documento.index', ['accion' => 'Nuevo'], compact('temas', 'tema', 'subtema'));
+        return view('mina.empresa.documento.index', ['accion' => 'Nuevo']);
     }
 
     public function store(Request $request){
@@ -51,13 +43,7 @@ class DocumentoController extends Controller{
 
     public function edit($id){
         $dato = Documento::findOrFail($id);
-        $temas = Tema::where('activo', 1)->orderBy('nombre')->get();
-        $tema = $temas->pluck('nombre', 'id');
-        $subtema = ['' => 'Seleccione...'];
-        foreach ($temas->where('id', $dato->tema_id)->first()->subtemas as $d) {
-            $subtema[$d->id] = $d->nombre;
-        }
-        return view('mina.empresa.documento.index', ['accion' => 'Editar'], compact('dato', 'temas', 'tema', 'subtema'));
+        return view('mina.empresa.documento.index', ['accion' => 'Editar'], compact('dato'));
     }
 
     public function update(Request $request, $id){
@@ -82,8 +68,6 @@ class DocumentoController extends Controller{
         return Validator::make($data, [
             'titulo' => 'required|string|max:150|unique:documentos',
             'descripcion' => 'required|string|max:255',
-            'tema_id' => 'required|exists:temas,id',
-            'subtema_id' => 'nullable|exists:parametros,id',
             'documento' => 'required|file',
         ]);
     }
@@ -92,8 +76,6 @@ class DocumentoController extends Controller{
         return Validator::make($data, [
             'titulo' => 'required|string|max:150|unique:documentos,titulo,'.$id,
             'descripcion' => 'required|string|max:255',
-            'tema_id' => 'required|exists:temas,id',
-            'subtema_id' => 'nullable|exists:parametros,id',
         ]);
     }
 }

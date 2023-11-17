@@ -16,7 +16,7 @@
 			        	@canany(['Viaje editar', 'Viaje borrar'])
 			        	    <th width="140px">Acción</th>
 			        	@endcanany
-			        	<th>Factura</th>
+			        	<th>Informe</th>
 			            <th>Fecha</th>
 			            <th>Operador</th>
 			            <th>Desde</th>

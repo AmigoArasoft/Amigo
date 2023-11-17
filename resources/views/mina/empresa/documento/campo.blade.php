@@ -25,28 +25,6 @@
 <div class="row">
 	<div class="col-md-3">
 		<div class="form-group">
-			{{ Form::label('tema_id', 'Tema:') }}
-			{{ Form::select('tema_id', $tema, null, ['class' => $errors->first('tema_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'onChange' => 'cambiaTema(this.value)']) }}
-			@if($errors->has('tema_id'))
-				<div class="invalid-feedback d-block">
-		        	{{ $errors->first('tema_id') }}
-		      	</div>
-		    @endif
-		</div>
-	</div>
-	<div class="col-md-3">
-		<div class="form-group">
-			{{ Form::label('subtema_id', 'Subtema:') }}
-			{{ Form::select('subtema_id', $subtema, null, ['class' => $errors->first('subtema_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
-			@if($errors->has('subtema_id'))
-				<div class="invalid-feedback d-block">
-		        	{{ $errors->first('subtema_id') }}
-		      	</div>
-		    @endif
-		</div>
-	</div>
-	<div class="col-md-3">
-		<div class="form-group">
 			{{ Form::label('documento', 'Documento:') }}
 			{{ Form::file('documento') }}
 			@if($errors->has('documento'))

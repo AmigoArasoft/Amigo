@@ -15,7 +15,7 @@
 	<div class="col-md-3 text-right">
 		@if ($viajes->sum('total') > 0)
 			@can('Factura crear')
-				{{ Form::button('<i class="fas fa-money-check-alt"></i> Facturar', ['type' => 'submit', 'class' => 'btn btn-info']) }}
+				{{ Form::button('<i class="fas fa-money-check-alt"></i> Crear Informe', ['type' => 'submit', 'class' => 'btn btn-info']) }}
 			@endcan
 		@endif
 	</div>

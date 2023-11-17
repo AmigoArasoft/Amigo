@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-2">
-		{{ Form::label('val_0', 'Factura:') }} {{ $dato->id }}
+		{{ Form::label('val_0', 'Informe:') }} {{ $dato->id }}
 		<br>
 		{{ Form::label('val_3', 'Viajes:') }} {{ $dato->viajes->count() }}
 	</div>

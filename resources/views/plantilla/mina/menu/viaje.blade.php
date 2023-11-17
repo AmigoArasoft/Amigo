@@ -2,7 +2,7 @@
     <li class="nav-item">
         <a href="{{ route('factura') }}" class="nav-link">
             <i class="nav-icon fas fa-file-invoice"></i>
-            <p>Factura</p>
+            <p>Informe</p>
         </a>
     </li>
 @endcanany
