@@ -1,0 +1,1 @@
+<i class="fas fa-{{ ($valor > 0) ? 'check' : 'times' }}-circle text-{{ ($valor > 0) ? 'success' : 'danger' }}"></i>
