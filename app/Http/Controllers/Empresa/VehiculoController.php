@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Empresa;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-use App\Models\Vehiculo;
 use App\Models\Tercero;
+use App\Models\Vehiculo;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class VehiculoController extends Controller{
@@ -23,8 +24,9 @@ class VehiculoController extends Controller{
         if (!$request->ajax()) return redirect('/');
         return datatables()
             ->eloquent(Vehiculo::select('vehiculos.id', 'operador.nombre as operador', 'conductor.nombre as conductor', 'placa' , 'volumen', 'marca', 'vehiculos.activo')
-            ->leftJoin('terceros as conductor', 'conductor_id', '=', 'conductor.id')
-            ->leftJoin('terceros as operador', 'tercero_id', '=', 'operador.id'))
+            ->leftJoin('terceros as conductor', 'vehiculos.conductor_id', '=', 'conductor.id')
+            ->join('terceros as operador', 'operador.id', '=', 'vehiculos.tercero_id')
+            ->whereIn('operador.id', [Auth::user()->tercero_id]))
             ->addColumn('botones', 'mina/empresa/vehiculo/tablaBoton')
             ->addColumn('activo', 'mina/empresa/vehiculo/tablaActivo')
             ->rawColumns(['botones', 'activo'])

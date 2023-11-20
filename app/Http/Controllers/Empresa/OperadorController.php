@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Empresa;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Grupo;
+use App\Models\Tarifa;
 
 use App\Models\Tercero;
-use App\Models\Grupo;
+use Illuminate\Http\Request;
 // use App\Models\Material;
-use App\Models\Tarifa;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class OperadorController extends Controller{
     public function __construct(){
@@ -27,7 +28,9 @@ class OperadorController extends Controller{
         return datatables()
             ->eloquent(Tercero::select('terceros.id', 'terceros.nombre' , 'telefono', 'email', 'transporte', 'parametros.nombre as frente')
                 ->where('operador', 1)
-                ->join('parametros', 'frente_id', '=', 'parametros.id'))
+                ->where('terceros.id', Auth::user()->tercero_id)
+                ->join('parametros', 'frente_id', '=', 'parametros.id')
+            )
             ->addColumn('botones', 'mina/empresa/operador/tablaBoton')
             ->addColumn('transportador', 'mina/empresa/operador/tablaTransporte')
             ->rawColumns(['botones', 'transportador'])

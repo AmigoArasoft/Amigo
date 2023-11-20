@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Tercero;
 use App\Models\Grupo;
 use App\Models\Vehiculo;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class TransporteController extends Controller{
@@ -24,7 +25,9 @@ class TransporteController extends Controller{
         if (!$request->ajax()) return redirect('/');
         return datatables()
             ->eloquent(Tercero::select('id', 'nombre' , 'telefono', 'email')
-                ->where('transporte', 1))
+                ->where('transporte', 1)
+                ->where('id', Auth::user()->tercero_id)
+            )
             ->addColumn('botones', 'mina/empresa/transporte/tablaBoton')
             ->rawColumns(['botones'])
             ->toJson();
