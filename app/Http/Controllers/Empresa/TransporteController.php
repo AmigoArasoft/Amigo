@@ -49,7 +49,7 @@ class TransporteController extends Controller{
             ->toJson();
     }
 
-    public function create(){
+    public function create(Request $request){
         $tab = (isset($request->tab)) ? $request->tab : 1;
         $tercero = Tercero::where('persona_id', 2)->where('transporte', 0)->pluck('nombre', 'id');
         return view('mina.empresa.transporte.index', ['accion' => 'Nuevo'], compact('tab', 'tercero'));
