@@ -26,12 +26,21 @@ class OperadorController extends Controller{
     public function list(Request $request){
         if (!$request->ajax()) return redirect('/');
         return datatables()
-            ->eloquent(Tercero::select('terceros.id', 'terceros.nombre' , 'telefono', 'email', 'transporte', 'parametros.nombre as frente')
+            ->eloquent(
+                Tercero::select('terceros.id', 'terceros.nombre' , 'telefono', 'email', 'transporte', 'parametros.nombre as frente', 'terceros.activo')
                 ->where('operador', 1)
-                ->where('terceros.id', Auth::user()->tercero_id)
-                ->join('parametros', 'frente_id', '=', 'parametros.id')
+                ->when(Auth::user()->tercero_id != 1, function($q){
+                    return $q->where('terceros.id', Auth::user()->tercero_id);
+                })
+                ->leftJoin('parametros', 'frente_id', '=', 'parametros.id')
             )
-            ->addColumn('botones', 'mina/empresa/operador/tablaBoton')
+            ->addColumn('botones', function (Tercero $tercero) {
+                if($tercero->activo == 0){
+                    return view('mina.empresa.operador.tablaBotonActivar', ['id' => $tercero->id]);
+                }else{
+                    return view('mina.empresa.operador.tablaBoton', ['id' => $tercero->id]);
+                }
+            })
             ->addColumn('transportador', 'mina/empresa/operador/tablaTransporte')
             ->rawColumns(['botones', 'transportador'])
             ->toJson();
@@ -68,7 +77,7 @@ class OperadorController extends Controller{
 
     public function create(){
         $tab = (isset($request->tab)) ? $request->tab : 1;
-        $tercero = Tercero::where('persona_id', 2)->where('operador', 0)->pluck('nombre', 'id');
+        $tercero = Tercero::where('operador', 0)->pluck('nombre', 'id');
         $frente = Grupo::findOrFail(5)->parametros()->orderBy('nombre')->pluck('nombre', 'id');
         $comprador = Grupo::findOrFail(8)->parametros()->orderBy('nombre')->pluck('nombre', 'id');
         return view('mina.empresa.operador.index', ['accion' => 'Nuevo'], compact('tab', 'tercero', 'frente', 'comprador'));
@@ -104,7 +113,7 @@ class OperadorController extends Controller{
         // $material = Material::where('activo', 1)->orderBy('nombre')->pluck('nombre', 'id');
         $material = Tarifa::where('activo', 1)->orderBy('nombre')->pluck('nombre', 'id');
         $frente = Grupo::findOrFail(5)->parametros()->orderBy('nombre')->pluck('nombre', 'id');
-        $terceros = Tercero::where('persona_id', 1)->pluck('nombre', 'id');
+        $terceros = Tercero::where('persona_id', 1)->where('id', '!=', $id)->pluck('nombre', 'id');
         $transportes = Tercero::where('persona_id', 2)->where('transporte', 1)->pluck('nombre', 'id');
         $comprador = Grupo::findOrFail(8)->parametros()->orderBy('nombre')->pluck('nombre', 'id');
         return view('mina.empresa.operador.index', ['accion' => 'Editar'], compact('tab', 'dato', 'terceros', 'funcion', 'material', 'frente', 'transportes', 'comprador'));
@@ -117,6 +126,11 @@ class OperadorController extends Controller{
         $comprador = ($opera == 1) ? $request->comprador_id : null ;
         $frente = ($opera == 0) ? null : $request->frente_id;
         $dato = Tercero::findOrFail($id);
+
+        if($dato->activo == 0){
+            return redirect()->route('operador.listar')->with('warning', 'Debe activar el Operador para poder editarlo');
+        }
+
         if(is_null($request->file('archivo'))){
             $request->merge(['firma' => $dato->firma]);
         } else {
@@ -176,6 +190,15 @@ class OperadorController extends Controller{
         $dato = Tercero::findOrFail($id);
         $dato->tarifas()->detach($id1);
         return redirect()->route('operador.editar', $id)->with('info', 'Registro actualizado con éxito')->with('tab', 4);
+    }
+
+    public function actualizarEstadoOperador($id, $estado){
+        $operador = Tercero::find($id)->update([
+            'activo' => $estado,
+            'frente_id' => NULL
+        ]);
+
+        return redirect()->back()->with('info', 'Registro actualizado con éxito');
     }
 
     protected function validator(array $data){

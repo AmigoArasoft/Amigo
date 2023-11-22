@@ -165,6 +165,7 @@ Route::prefix('mina')->group(function () {
 					Route::get('borrarContacto/{id}/{id1}', [OperadorController::class, 'destroyContact'])->name('operador.borrarContacto');
 					Route::get('borrarMaterial/{id}/{id1}', [OperadorController::class, 'destroyMaterial'])->name('operador.borrarMaterial');
 					Route::get('borrarTransporte/{id}/{id1}', [OperadorController::class, 'destroyTransport'])->name('operador.borrarTransporte');
+					Route::get('actualizarEstado/{id}/{estado}', [OperadorController::class, 'actualizarEstadoOperador'])->name('operador.actualizarEstado');
 				});
 			});
 			Route::prefix('transporte')->group(function () {

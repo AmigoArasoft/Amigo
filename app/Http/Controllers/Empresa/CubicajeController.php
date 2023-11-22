@@ -28,7 +28,7 @@ class CubicajeController extends Controller{
             ->eloquent(Cubicaje::select('cubicajes.id', 'cubicajes.fecha_nombre as fecha', 'terceros.nombre as operador', 'vehiculos.placa as placa', 'cubicajes.volumen as volumen', 'cubicajes.activo')
                 ->when(Auth::user()->tercero_id != 1, 
                     function($q){
-                        return $q->where('tercero_id', Auth::user()->tercero_id);
+                        return $q->where('cubicajes.tercero_id', Auth::user()->tercero_id);
                     })
                 ->join('vehiculos', 'cubicajes.vehiculo_id', '=', 'vehiculos.id')
                 ->join('terceros', 'cubicajes.tercero_id', '=', 'terceros.id'))

@@ -26,7 +26,9 @@ class TransporteController extends Controller{
         return datatables()
             ->eloquent(Tercero::select('id', 'nombre' , 'telefono', 'email')
                 ->where('transporte', 1)
-                ->where('id', Auth::user()->tercero_id)
+                ->when(Auth::user()->tercero_id != 1, function($q){
+                    return $q->where('id', Auth::user()->tercero_id);
+                })
             )
             ->addColumn('botones', 'mina/empresa/transporte/tablaBoton')
             ->rawColumns(['botones'])
@@ -54,7 +56,7 @@ class TransporteController extends Controller{
 
     public function create(Request $request){
         $tab = (isset($request->tab)) ? $request->tab : 1;
-        $tercero = Tercero::where('persona_id', 2)->where('transporte', 0)->pluck('nombre', 'id');
+        $tercero = Tercero::where('transporte', 0)->pluck('nombre', 'id');
         return view('mina.empresa.transporte.index', ['accion' => 'Nuevo'], compact('tab', 'tercero'));
     }
 
