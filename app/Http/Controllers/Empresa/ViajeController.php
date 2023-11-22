@@ -35,7 +35,7 @@ class ViajeController extends Controller{
     public function list(Request $request){
         if (!$request->ajax()) return redirect('/');
         return datatables()
-            ->eloquent(Viaje::select('viajes.id', 'viajes.fecha_nombre as fecha', 'terceros.nombre as operador', 'vehiculos.placa', 'materias.nombre', 'viajes.volumen', 'users.name as digitador', 'viajes.activo')
+            ->eloquent(Viaje::select('viajes.nro_viaje', 'viajes.id', 'viajes.fecha_nombre as fecha', 'terceros.nombre as operador', 'vehiculos.placa', 'materias.nombre', 'viajes.volumen', 'users.name as digitador', 'viajes.activo')
                 ->where('eliminado', 0)
                 ->whereNull('factura_id')
                 ->when(Auth::user()->tercero_id != 1, function($q){
@@ -77,7 +77,7 @@ class ViajeController extends Controller{
     }
 
     public function create(){
-        $operadores = Tercero::where('operador', 1)->where('activo', 1)->orderBy('nombre')->get();
+        $operadores = Tercero::where('operador', 1)->whereNotNull('frente_id')->where('activo', 1)->orderBy('nombre')->get();
         $operador = $operadores->pluck('nombre', 'id');
 
         $subgrupo = Gruposubmat::select('nombre', 'id')
@@ -131,7 +131,8 @@ class ViajeController extends Controller{
             'subgrupo_id' => $request->subgrupo_id,
             'frente_id' => $operador->frente_id,
             'volumen' => $request->volumen,
-            'valor' => $tarifa->tarifa
+            'valor' => $tarifa->tarifa,
+            'nro_viaje' => $request->nro_viaje ?? NULL
         ]);
 
         $vehiculo->fill([
@@ -195,7 +196,8 @@ class ViajeController extends Controller{
             'subgrupo_id' => $request->subgrupo_id,
             'frente_id' => $operador->frente_id,
             'volumen' => $request->volumen,
-            'valor' => $tarifa->tarifa
+            'valor' => $tarifa->tarifa,
+            'nro_viaje' => $request->nro_viaje ?? NULL
         ])->save();
         $vehiculo->fill([
             'conductor_id' => $request->conductor_id,

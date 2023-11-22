@@ -9,9 +9,10 @@ $(document).ready(function() {
             {data: 'id', name: 'viajes.id'},
             @if(Auth::user()->tercero_id == 1)
                 @canany(['Viaje editar', 'Viaje borrar'])
-        		    {data: 'botones', class: 'text-center', orderable: false},
+                    {data: 'botones', class: 'text-center', orderable: false},
                 @endcanany
             @endif
+            {data: 'nro_viaje', name: 'viajes.nro_viaje'},
             {data: 'fecha', name: 'viajes.fecha_nombre'},
             {data: 'operador', name: 'terceros.nombre'},
             {data: 'placa', name: 'vehiculos.placa'},
