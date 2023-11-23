@@ -80,7 +80,7 @@
 	</div>
 	<div class="col-md-2">
 		<div class="form-group">
-			{{ Form::label('nro_viaje', 'Número de Viaje (Opcional):') }}
+			{{ Form::label('nro_viaje', 'Número de Vale (Opcional):') }}
 			{{ Form::text('nro_viaje', (!isset($dato)) ? $vehi->nro_viaje : null, ['class' => $errors->first('nro_viaje') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
 			@if($errors->has('nro_viaje'))
 				<div class="invalid-feedback d-block">

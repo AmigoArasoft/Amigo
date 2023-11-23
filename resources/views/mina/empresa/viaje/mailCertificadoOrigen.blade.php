@@ -1,0 +1,1 @@
+<h1>Certificado de Origen #{{ $numero_certificado }}</h1>

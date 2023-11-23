@@ -28,6 +28,7 @@ Route::post('contacto', [WelcomeController::class, 'contacto'])->name('contacto'
 // 	$linkFolder = $_SERVER['DOCUMENT_ROOT'].'/storage';
 // 	symlink($targetFolder, $linkFolder);
 // });
+
 Route::prefix('mina')->group(function () {
 	Route::get('/', [MinaController::class, 'index'])->name('mina');
 	Route::get('origen', [ViajeController::class, 'origin'])->name('origen');
@@ -109,6 +110,7 @@ Route::prefix('mina')->group(function () {
 		Route::post('login', [LoginController::class, 'Login']);
 	});
 	Route::middleware(['auth'])->group(function () {
+		Route::post('sendEmailCertificadoOrigen', [MinaController::class, 'sendEmailCertificadoOrigen'])->name('certificado.origen');
 		Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 		Route::get('clave', [MinaController::class, 'clave'])->name('clave');
 		Route::post('clave', [MinaController::class, 'cambio']);
@@ -242,27 +244,6 @@ Route::prefix('mina')->group(function () {
 					Route::get('eliminar/{id}/{id0}', [TemaController::class, 'destroyParametro'])->name('tema.eliminar');
 				});
 			});
-//			Route::prefix('material')->group(function () {
-//				Route::middleware(['permission:Material leer|Material crear|Material editar|Material borrar'])->group(function () {
-//					Route::get('', [MaterialController::class, 'index'])->name('material');
-//					Route::get('listar', [MaterialController::class, 'list'])->name('material.listar');
-//				});
-//				Route::middleware(['permission:Material editar|Material borrar'])->group(function () {
-//					Route::get('listarParametro/{id}', [MaterialController::class, 'listParametro'])->name('material.listarParametro');
-//				});
-//				Route::middleware(['permission:Material crear'])->group(function () {
-//					Route::get('crear', [MaterialController::class, 'create'])->name('material.crear');
-//					Route::post('crear', [MaterialController::class, 'store']);
-//				});
-//				Route::middleware(['permission:Material editar'])->group(function () {
-//					Route::get('editar/{id}', [MaterialController::class, 'edit'])->name('material.editar');
-//					Route::put('editar/{id}', [MaterialController::class, 'update']);
-//					Route::get('agregar/{id}/{id0}', [MaterialController::class, 'updateParametro'])->name('material.agregar');
-//				});
-//				Route::middleware(['permission:Material borrar'])->group(function () {
-//					Route::get('eliminar/{id}/{id0}', [MaterialController::class, 'destroyParametro'])->name('material.eliminar');
-//				});
-//			});
 			Route::middleware(['permission:Material leer|Material crear|Material editar|Material borrar'])->group(function () {
 				Route::get('material', function () {
 					return view('mina.administracion.material');

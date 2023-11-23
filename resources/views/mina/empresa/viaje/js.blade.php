@@ -26,4 +26,8 @@ $(document).ready(function() {
        	}
     });
 } );
+
+function changeId(id){
+    $("#certificado_origen").val(id);
+}
 </script>

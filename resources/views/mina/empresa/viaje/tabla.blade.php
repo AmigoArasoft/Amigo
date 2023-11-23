@@ -19,7 +19,7 @@
 				        	    <th width="180px">Acción</th>
 				        	@endcanany
 				        @endif
-			            <th>Nro Viaje</th>
+			            <th>Nro Vale</th>
 			            <th>Fecha</th>
 			            <th>Operador</th>
 			            <th>Vehículo</th>

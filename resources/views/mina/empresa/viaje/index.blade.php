@@ -12,6 +12,7 @@
 	@include('mina.empresa.viaje.forma')
 @else
     @include('mina.empresa.viaje.tabla')
+	@include('mina.empresa.viaje.modal')
 @endisset
 @endsection
 

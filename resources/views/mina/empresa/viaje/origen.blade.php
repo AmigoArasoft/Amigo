@@ -129,7 +129,7 @@
             </tr>
             <tr class="centro">
                 <td colspan="2" class="borde">MINERAL EXPLOTADO</td>
-                <td colspan="6" class="borde"><b>{{ $dato->material->nombre }} - {{ $dato->submaterial->nombre }}</b></td>
+                <td colspan="6" class="borde"><b>{{ $dato->material->nombre }}</b></td>
             </tr>
             <tr class="centro">
                 <td colspan="2" class="borde">CANTIDAD MINERAL COMERCIALIZADO</td>
