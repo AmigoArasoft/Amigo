@@ -113,8 +113,8 @@ class ViajeController extends Controller{
         $operador = Tercero::findOrFail($request->operador_id);
         $tarifa = TerceroTarifa::select('tarifa')
         ->where('tercero_id', $request->operador_id)
-        ->join('tarifa_gruposubmat', 'tarifa_gruposubmat.tarifa_id', '=', 'tercero_tarifa.tarifa_id')
-        ->where('tarifa_gruposubmat.gruposubmat_id', $request->subgrupo_id)
+        ->join('tarifa_material', 'tarifa_material.tarifa_id', '=', 'tercero_tarifa.tarifa_id')
+        ->where('tarifa_material.material_id', $request->material_id)
         ->first();
 
         if(!$tarifa){
@@ -178,8 +178,8 @@ class ViajeController extends Controller{
         $operador = Tercero::findOrFail($request->operador_id);
         $tarifa = TerceroTarifa::select('tarifa')
         ->where('tercero_id', $request->operador_id)
-        ->join('tarifa_gruposubmat', 'tarifa_gruposubmat.tarifa_id', '=', 'tercero_tarifa.tarifa_id')
-        ->where('tarifa_gruposubmat.gruposubmat_id', $request->subgrupo_id)
+        ->join('tarifa_material', 'tarifa_material.tarifa_id', '=', 'tercero_tarifa.tarifa_id')
+        ->where('tarifa_material.material_id', $request->subgrupo_id)
         ->first();
 
         if(!$tarifa){

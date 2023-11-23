@@ -22,7 +22,7 @@ class Tarifa extends Model{
         });
     }
 
-    public function subgrupos(){
-        return $this->belongsToMany(Gruposubmat::class, 'tarifa_gruposubmat', 'tarifa_id', 'gruposubmat_id');
+    public function materiales(){
+        return $this->belongsToMany(Materia::class, 'tarifa_material', 'tarifa_id', 'material_id');
     }
 }

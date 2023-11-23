@@ -25,14 +25,13 @@
                         <th width="180px">Acción</th>
                     @endcanany
                     <th>Nombre</th>
-                    <th>Sub grupo</th>
                     <th>Material</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($tarifas as $e)
                 <tr>
-                    <td{{ $e->subgrupos->count() > 1 ? ' rowspan='.$e->subgrupos->count().'' : '' }}>
+                    <td {{ $e->materiales->count() > 1 ? ' rowspan='.$e->materiales->count().'' : '' }}>
                         <button wire:click="editTarifa({{ $e->id }}, 'Editar')" class="btn btn-sm btn-info">
                             <i class="fas fa-edit"></i> Editar
                         </button>
@@ -40,34 +39,17 @@
                             <i class="fas fa-{{ ($e->activo) ? 'times' : 'check' }}"></i> {{ ($e->activo) ? 'Desactivar' : 'Activar' }}
                         </button>
                     </td>
-                    <td{{ $e->subgrupos->count() > 1 ? ' rowspan='.$e->subgrupos->count().'' : '' }}>
+                    <td {{ $e->materiales->count() > 1 ? ' rowspan='.$e->materiales->count().'' : '' }}>
                         {{ $e->nombre }}
                     </td>
-                    @foreach($e->subgrupos as $k => $i)
+                    @foreach($e->materiales as $k => $i)
                         @if($k > 0)
                             </tr><tr>
                         @endif
                         <td class="text-sm">
                             {{ $i->nombre }}
                         </td>
-                        <td class="text-sm">
-                            @foreach($i->materiales as $o)
-                                {{ $o->nombre }}
-                                @if($loop->remaining)
-                                    /
-                                @endif
-                            @endforeach
-                        </td>
                     @endforeach
-{{--                    <td>--}}
-{{--                        @if($e->subgrupos->count() > 0 )--}}
-{{--                            @foreach($e->subgrupos as $i)--}}
-{{--                                @foreach($i->materiales as $o)--}}
-{{--                                    <span class="badge badge-secondary mr-1">{{ $o->nombre }}</span>--}}
-{{--                                @endforeach--}}
-{{--                            @endforeach--}}
-{{--                        @endif--}}
-{{--                    </td>--}}
                 </tr>
                 @endforeach
             </tbody>

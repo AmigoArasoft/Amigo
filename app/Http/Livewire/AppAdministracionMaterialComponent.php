@@ -18,7 +18,7 @@ class AppAdministracionMaterialComponent extends Component{
     public $material_id, $nombreMaterial, $actionMaterial, $searchMaterial, $especificacionesLista, $especificacion;
     public $subgrupo_id, $nombreSubgrupo, $actionSubgrupo, $searchSubgrupo, $materialesLista, $material;
     public $grupo_id, $nombreGrupo, $actionGrupo, $searchGrupo, $subgruposLista, $subgrupo;
-    public $tarifa_id, $nombreTarifa, $actionTarifa, $searchTarifa, $subgruposListaTarifa, $subgrupoTarifa;
+    public $tarifa_id, $nombreTarifa, $actionTarifa, $searchTarifa, $subgruposListaTarifa, $materialesTarifa, $materialesListaTarifa, $subgrupoTarifa;
 
     public function render(){
         return view('livewire.mina.administracion.material.index', [
@@ -91,8 +91,8 @@ class AppAdministracionMaterialComponent extends Component{
     public function createTarifa(){
         $this->tab = 5;
         $this->nombreTarifa = '';
-        $this->subgrupoTarifa = [];
-        $this->subgruposListaTarifa = Gruposubmat::where('activo', 1)->orderBy('nombre')->get();
+        $this->materialesTarifa = [];
+        $this->materialesListaTarifa = Materia::where('activo', 1)->orderBy('nombre')->get();
         $this->actionTarifa = 'Nueva';
     }
 
@@ -121,9 +121,9 @@ class AppAdministracionMaterialComponent extends Component{
     }
 
     public function storeTarifa(){
-        $this->validate(['nombreTarifa' => 'required|max:100|unique:tarifas,nombre', 'subgrupoTarifa' => 'required|array']);
+        $this->validate(['nombreTarifa' => 'required|max:100|unique:tarifas,nombre', 'materialesTarifa' => 'required|array']);
         $dato = Tarifa::Create(['nombre' => $this->nombreTarifa]);
-        $dato->subgrupos()->attach($this->subgrupoTarifa);
+        $dato->materiales()->attach($this->materialesTarifa);
         $this->emit('alert', ['type' => 'success', 'message' => 'Tarifa creado con éxito']);
         $this->defaultTarifa();
     }
@@ -206,11 +206,11 @@ class AppAdministracionMaterialComponent extends Component{
         $this->tab = 5;
         $this->tarifa_id = $tarifa->id;
         $this->nombreTarifa = $tarifa->nombre;
-        $this->subgrupoTarifa = [];
-        foreach ($tarifa->subgrupos as $e) {
-            $this->subgrupoTarifa[] = "$e->id";
+        $this->materialesTarifa = [];
+        foreach ($tarifa->materiales as $e) {
+            $this->materialesTarifa[] = "$e->id";
         }
-        $this->subgruposListaTarifa = Gruposubmat::where('activo', 1)->orderBy('nombre')->get();
+        $this->materialesListaTarifa = Materia::where('activo', 1)->orderBy('nombre')->get();
         $this->actionTarifa = $act;
     }
 
@@ -251,11 +251,11 @@ class AppAdministracionMaterialComponent extends Component{
     }
 
     public function updateTarifa(){
-        $this->validate(['nombreTarifa' => 'required|max:100|unique:tarifas,nombre,'.$this->tarifa_id, 'subgrupoTarifa' => 'required|array']);
+        $this->validate(['nombreTarifa' => 'required|max:100|unique:tarifas,nombre,'.$this->tarifa_id, 'materialesTarifa' => 'required|array']);
         $dato = Tarifa::findOrFail($this->tarifa_id);
         $dato->update(['nombre' => $this->nombreTarifa]);
-        $dato->subgrupos()->detach();
-        $dato->subgrupos()->sync($this->subgrupoTarifa);
+        $dato->materiales()->detach();
+        $dato->materiales()->sync($this->materialesTarifa);
         $this->defaultTarifa();
     }
 
@@ -334,8 +334,8 @@ class AppAdministracionMaterialComponent extends Component{
     public function defaultTarifa(){
         $this->tab = 5;
         $this->nombreTarifa = '';
-        $this->subgrupoListaTarifa = '';
-        $this->subgrupoTarifa = [];
+        $this->materialesListaTarifa = '';
+        $this->materialesTarifa = [];
         $this->actionTarifa = '';
     }
 }
