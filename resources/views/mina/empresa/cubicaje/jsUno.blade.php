@@ -5,7 +5,7 @@
             [{{$m->id}}, "{{ $m->placa }}"],
         @endforeach
     ];
-    var rep_{{ $d->id }}="{{ $d->gerente()->nombre }}";
+    var rep_{{ $d->id }}="{{ $d->gerente()->nombre ?? null }}";
 @endforeach
 @foreach($operadores as $d)
     @foreach($d->transportesVehiculos->sortBy('placa') as $m)

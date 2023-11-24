@@ -43,8 +43,7 @@ class CubicajeController extends Controller{
         $operadores = Tercero::where('operador', 1)->where('activo', 1)->orderBy('nombre')->get();
         $terceros = $operadores->pluck('nombre', 'id');
         $vehiculos = $operadores->first()->transportesVehiculos()->get()->sortBy('placa')->pluck('placa', 'id');
-        return view('mina.empresa.cubicaje.index', ['accion' => 'Nuevo'], compact('fecha', 'operadores', 'terceros', 'vehiculos')
-        );
+        return view('mina.empresa.cubicaje.index', ['accion' => 'Nuevo'], compact('fecha', 'operadores', 'terceros', 'vehiculos'));
     }
 
     public function store(Request $request){

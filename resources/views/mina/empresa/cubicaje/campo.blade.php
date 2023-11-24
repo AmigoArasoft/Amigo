@@ -188,7 +188,7 @@
 	<div class="col-md-4">
 		<div class="form-group">
 			{{ Form::label('operador', 'Operador:') }}
-			{{ Form::text('operador', (!isset($dato)) ? $operadores->first()->gerente()->nombre : null, ['class' => $errors->first('operador') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'placeholder' => 'Operador', 'maxlength' => '50']) }}
+			{{ Form::text('operador', (!isset($dato)) ? $operadores->first()->gerente()->nombre ?? null : null, ['class' => $errors->first('operador') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'placeholder' => 'Operador', 'maxlength' => '50']) }}
 			@if($errors->has('operador'))
 				<div class="invalid-feedback d-block">
 		        	{{ $errors->first('operador') }}

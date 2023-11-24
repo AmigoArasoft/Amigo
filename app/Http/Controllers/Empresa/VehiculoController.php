@@ -26,7 +26,9 @@ class VehiculoController extends Controller{
             ->eloquent(Vehiculo::select('vehiculos.id', 'operador.nombre as operador', 'conductor.nombre as conductor', 'placa' , 'volumen', 'marca', 'vehiculos.activo')
             ->leftJoin('terceros as conductor', 'vehiculos.conductor_id', '=', 'conductor.id')
             ->join('terceros as operador', 'operador.id', '=', 'vehiculos.tercero_id')
-            ->whereIn('operador.id', [Auth::user()->tercero_id]))
+            ->when(Auth::user()->tercero_id != 1, function($q){
+                return $q->where('operador.id', Auth::user()->tercero_id);
+            }))
             ->addColumn('botones', 'mina/empresa/vehiculo/tablaBoton')
             ->addColumn('activo', 'mina/empresa/vehiculo/tablaActivo')
             ->rawColumns(['botones', 'activo'])
