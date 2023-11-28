@@ -83,34 +83,46 @@ class ViajeController extends Controller{
     }
 
     public function create(){
-        $operadores = Tercero::where('operador', 1)->whereNotNull('frente_id')->where('activo', 1)->orderBy('nombre')->get();
-        $operador = $operadores->pluck('nombre', 'id');
+        try {
+            $operadores = Tercero::where('operador', 1)->whereNotNull('frente_id')->where('activo', 1)->orderBy('nombre')->get();
+            $operador = $operadores->pluck('nombre', 'id');
 
-        $subgrupo = Gruposubmat::select('nombre', 'id')
-        ->where('activo', 1)
-        ->get()
-        ->pluck('nombre', 'id');
+            $subgrupo = Gruposubmat::select('nombre', 'id')
+            ->where('activo', 1)
+            ->get()
+            ->pluck('nombre', 'id');
 
-        $vehiculo = $conductor = [];
-        foreach ($operadores->first()->transportes as $d) {
-            foreach ($d->vehiculos as $e) {
-                $vehiculo[$e->id] = $e->placa;
+            $vehiculo = $conductor = [];
+            if($operadores->first()->transportes){
+                foreach ($operadores->first()->transportes as $d) {
+                    foreach ($d->vehiculos as $e) {
+                        $vehiculo[$e->id] = $e->placa;
+                    }
+                }
+                asort($vehiculo);
+
+                foreach ($operadores->first()->transportes as $d) {
+                    foreach ($d->conductores as $e) {
+                        $conductor[$e->id] = $e->nombre;
+                    }
+                }
+                asort($conductor);
             }
-        }
-        asort($vehiculo);
-        foreach ($operadores->first()->transportes as $d) {
-            foreach ($d->conductores as $e) {
-                $conductor[$e->id] = $e->nombre;
+
+            if(count($vehiculo) <= 0 && count($conductor) <= 0){
+                return back()->with('error', "Todos los Operadores deben tener Transportes y Vehículos asignados para poder crear un viaje");
             }
+            
+            $vehi = Vehiculo::find(array_key_first($vehiculo));
+            $vehiculos = Vehiculo::where('activo', 1)->get();
+            $materiales = Materia::select('nombre', 'id')->where('activo', 1)->get()->pluck('nombre', 'id');
+            $subgrupo_materia = GrupoSubMateriaMaterial::select('gruposubmat_id', 'material_id')->get();
+            $hoy = Carbon::now()->toDateString();
+            $desde = Carbon::now()->subDays(4)->toDateString();
+            return view('mina.empresa.viaje.index', ['accion' => 'Nuevo'], compact('subgrupo_materia', 'operadores', 'operador', 'subgrupo', 'vehiculo', 'conductor', 'vehi', 'vehiculos', 'materiales', 'hoy', 'desde'));
+        } catch (\Exception $e) {
+            dd($e->getMessage().$e->getLine());
         }
-        asort($conductor);
-        $vehi = Vehiculo::findOrFail(array_key_first($vehiculo));
-        $vehiculos = Vehiculo::where('activo', 1)->get();
-        $materiales = Materia::select('nombre', 'id')->where('activo', 1)->get()->pluck('nombre', 'id');
-        $subgrupo_materia = GrupoSubMateriaMaterial::select('gruposubmat_id', 'material_id')->get();
-        $hoy = Carbon::now()->toDateString();
-        $desde = Carbon::now()->subDays(4)->toDateString();
-        return view('mina.empresa.viaje.index', ['accion' => 'Nuevo'], compact('subgrupo_materia', 'operadores', 'operador', 'subgrupo', 'vehiculo', 'conductor', 'vehi', 'vehiculos', 'materiales', 'hoy', 'desde'));
     }
 
     public function store(Request $request){

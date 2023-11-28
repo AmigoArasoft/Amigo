@@ -13,7 +13,7 @@
 			<table id="tabla" class="table table-bordered table-striped table-hover table-sm">
 			    <thead>
 			        <tr class="text-center">
-			        	@canany(['Viaje editar', 'Viaje borrar'])
+			        	@canany(['Factura editar', 'Factura borrar'])
 			        	    <th width="140px">Acción</th>
 			        	@endcanany
 			        	<th>Informe</th>
