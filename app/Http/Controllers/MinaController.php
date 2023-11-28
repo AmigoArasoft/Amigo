@@ -10,6 +10,7 @@ use App\Models\Viaje;
 use Illuminate\Http\Request;
 
 use App\Mail\CertificadoOrigen;
+use App\Mail\Vale;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -28,16 +29,21 @@ class MinaController extends Controller{
         return view('auth.clave');
     }
 
-    public function sendEmailCertificadoOrigen(Request $request){
+    public function sendEmailCorreos(Request $request){
         try {
             $emails = explode(",", $request->emails);
             $dato = Viaje::findOrFail($request->id);
             $carpeta = (substr(URL::current(), 0, 16) == 'http://localhost') ? '' : '/mina_app';
-            $pdf = PDF::loadView('mina.empresa.viaje.origen', compact('dato', 'carpeta'));
-            Storage::put('public/pdf/certificado_origen.pdf', $pdf->output());
-            $mail = new CertificadoOrigen("public/pdf/certificado_origen.pdf", $dato->id);
+            $lugarDocumento = $request->tipo_documento == "origen" ? 'public/pdf/certificado_origen.pdf' : 'public/pdf/vale.pdf';
+            $pdf = $request->tipo_documento == "origen" ? PDF::loadView('mina.empresa.viaje.origen', compact('dato', 'carpeta')) : PDF::loadView('mina.empresa.viaje.vale', compact('dato', 'carpeta'));
+            Storage::put($lugarDocumento, $pdf->output());
+            if($request->tipo_documento == "origen"){
+                $mail = new CertificadoOrigen($lugarDocumento, $dato->id);
+            }else{
+                $mail = new Vale($lugarDocumento, $dato->id);
+            }
             Mail::to($emails)->send($mail);
-            return redirect()->route('viaje')->with('info', 'Certificado de origen enviado correctamente');
+            return redirect()->route('viaje')->with('info', $request->tipo_documento == "origen" ? 'Certificado de origen enviado correctamente' : 'Vale enviado correctamente');
         } catch (\Throwable $th) {
             return redirect()->route('viaje')->with('error', 'Error al enviar el correo electrónico'.$th->getMessage());
         }

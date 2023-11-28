@@ -12,9 +12,9 @@ use App\Http\Controllers\Empresa\EmpresaController;
 use App\Http\Controllers\Empresa\OperadorController;
 use App\Http\Controllers\Empresa\TransporteController;
 use App\Http\Controllers\Empresa\VehiculoController;
+use App\Http\Controllers\Empresa\InformeAutoridadesController;
 use App\Http\Controllers\Administracion\TerceroController;
 use App\Http\Controllers\Administracion\TemaController;
-use App\Http\Controllers\Administracion\MaterialController;
 use App\Http\Controllers\Administracion\GrupoController;
 use App\Http\Controllers\Administracion\ParametroController;
 use App\Http\Controllers\Acceso\UsuarioController;
@@ -23,16 +23,13 @@ use App\Http\Controllers\Acceso\PermisoController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('/');
 Route::post('contacto', [WelcomeController::class, 'contacto'])->name('contacto');
-// Route::get('storage-link', function(){
-// 	$targetFolder = $_SERVER['DOCUMENT_ROOT'].'/mina_app/storage/app/public';
-// 	$linkFolder = $_SERVER['DOCUMENT_ROOT'].'/storage';
-// 	symlink($targetFolder, $linkFolder);
-// });
 
 Route::prefix('mina')->group(function () {
 	Route::get('/', [MinaController::class, 'index'])->name('mina');
 	Route::get('origen', [ViajeController::class, 'origin'])->name('origen');
+	Route::match(['GET', 'POST'], 'vale', [ViajeController::class, 'vale'])->name('getVale');
 	Route::post('origen', [ViajeController::class, 'origin']);
+	Route::match(['GET', 'POST'], 'tope', [InformeAutoridadesController::class, 'tope'])->name('tope');
 	Route::prefix('factura')->group(function () {
 		Route::middleware(['permission:Factura leer|Factura crear|Factura editar|Factura borrar'])->group(function () {
 			Route::get('', [FacturaController::class, 'index'])->name('factura');
@@ -58,6 +55,16 @@ Route::prefix('mina')->group(function () {
 		});
 		Route::middleware(['permission:Factura leer', 'mina'])->group(function () {
 			Route::get('activar/{id}', [FacturaController::class, 'destroy'])->name('factura.activar');
+		});
+	});
+	Route::prefix('informes')->group(function () {
+		Route::middleware(['permission:Factura leer|Factura crear|Factura editar|Factura borrar'])->group(function () {
+			Route::get('', [InformeAutoridadesController::class, 'index'])->name('facturaAutoridades');
+			Route::get('listar', [InformeAutoridadesController::class, 'list'])->name('facturaAutoridades.listar');
+		});
+		Route::middleware(['permission:Factura leer'])->group(function () {
+			Route::get('pdf/{id}', [InformeAutoridadesController::class, 'pdf'])->name('facturaAutoridades.pdf');
+			Route::get('excel/{id}', [InformeAutoridadesController::class, 'excel'])->name('facturaAutoridades.excel');
 		});
 	});
 	Route::prefix('cubicaje')->group(function () {
@@ -110,7 +117,7 @@ Route::prefix('mina')->group(function () {
 		Route::post('login', [LoginController::class, 'Login']);
 	});
 	Route::middleware(['auth'])->group(function () {
-		Route::post('sendEmailCertificadoOrigen', [MinaController::class, 'sendEmailCertificadoOrigen'])->name('certificado.origen');
+		Route::post('sendEmailCorreos', [MinaController::class, 'sendEmailCorreos'])->name('enviar.correos');
 		Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 		Route::get('clave', [MinaController::class, 'clave'])->name('clave');
 		Route::post('clave', [MinaController::class, 'cambio']);

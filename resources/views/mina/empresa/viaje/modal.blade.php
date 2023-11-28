@@ -8,13 +8,14 @@
         </button>
       </div>
       <div class="modal-body">
-        {!! Form::open(['route' => 'certificado.origen']) !!}
+        {!! Form::open(['route' => 'enviar.correos']) !!}
           <div class="form-group">
             <label for="emails">Correos a enviar</label>
             <input type="text" class="form-control" name="emails" placeholder="Ejemplo: correo@correo.com,otrocorreo@correo.com">
             <small id="emailHelp" class="form-text text-muted">Para enviar múltiples correos, utilice este ejemplo: correo@correo.com,otrocorreo@correo.com</small>
           </div>
-          <input type="hidden" name="id" id="certificado_origen">
+          <input type="hidden" name="id" id="id_documento_correo">
+          <input type="hidden" name="tipo_documento" id="tipo_documento">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

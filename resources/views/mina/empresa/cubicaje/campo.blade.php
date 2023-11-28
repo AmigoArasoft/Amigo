@@ -199,7 +199,7 @@
 	<div class="col-md-4">
 		<div class="form-group">
 			{{ Form::label('transportador', 'Transportador:') }}
-			{{ Form::text('transportador', (!isset($dato)) ? $operadores->first()->transportesVehiculos()->get()->sortBy('placa')->first()->tercero->nombre : null, ['class' => $errors->first('transportador') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'placeholder' => 'Transportador', 'maxlength' => '50']) }}
+			{{ Form::text('transportador', (!isset($dato)) ? $operadores->first()->transportesVehiculos()->get()->sortBy('placa')->first()->tercero->nombre ?? null : null, ['class' => $errors->first('transportador') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'placeholder' => 'Transportador', 'maxlength' => '50']) }}
 			@if($errors->has('transportador'))
 				<div class="invalid-feedback d-block">
 		        	{{ $errors->first('transportador') }}

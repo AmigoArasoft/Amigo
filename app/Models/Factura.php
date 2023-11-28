@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class Factura extends Model{
-	protected $fillable = ['tercero_id', 'fecha', 'desde', 'hasta', 'valor', 'activo'];
+	protected $fillable = ['tercero_id', 'fecha', 'desde', 'hasta', 'valor', 'activo', 'volumen'];
 
 	protected static function boot(){
         parent::boot();

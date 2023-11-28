@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-4">
 		<div class="form-group">
-			{{ Form::label('tercero_id', 'Operador:') }}
+			{{ Form::label('tercero_id', 'Operador/Transportador:') }}
 			{{ Form::select('tercero_id', $operador, $ope, ['class' => $errors->first('tercero_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'onchange' => 'this.form.submit()', 'autofocus']) }}
 			@if($errors->has('tercero_id'))
 				<div class="invalid-feedback d-block">

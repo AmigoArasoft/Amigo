@@ -12,9 +12,11 @@
                     <li class="nav-item">
                         <a class="nav-link{{ ($tab == 3) ? ' active' : '' }}" id="custom-tabs-three-tab" data-toggle="pill" href="#custom-tabs-three" role="tab" aria-controls="custom-tabs-three" aria-selected="false">Transportadores</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link{{ ($tab == 4) ? ' active' : '' }}" id="custom-tabs-four-tab" data-toggle="pill" href="#custom-tabs-four" role="tab" aria-controls="custom-tabs-four" aria-selected="false">Materiales</a>
-                    </li>
+                    @if ($user_tipo_usuario == 1)
+                        <li class="nav-item">
+                            <a class="nav-link{{ ($tab == 4) ? ' active' : '' }}" id="custom-tabs-four-tab" data-toggle="pill" href="#custom-tabs-four" role="tab" aria-controls="custom-tabs-four" aria-selected="false">Materiales</a>
+                        </li>
+                    @endif
                 @endcan
             @endif
         </ul>
@@ -45,9 +47,11 @@
                     <div class="tab-pane fade{{ ($tab == 3) ? '  show active' : '' }}" id="custom-tabs-three" role="tabpanel" aria-labelledby="custom-tabs-three-tab">
                         @include('mina.empresa.operador.formaTransporte')
                     </div>
-                    <div class="tab-pane fade{{ ($tab == 4) ? '  show active' : '' }}" id="custom-tabs-four" role="tabpanel" aria-labelledby="custom-tabs-four-tab">
-                        @include('mina.empresa.operador.formaMaterial')
-                    </div>
+                    @if ($user_tipo_usuario == 1)
+                        <div class="tab-pane fade{{ ($tab == 4) ? '  show active' : '' }}" id="custom-tabs-four" role="tabpanel" aria-labelledby="custom-tabs-four-tab">
+                            @include('mina.empresa.operador.formaMaterial')
+                        </div>
+                    @endif
                 @endcan
             @endif
         </div>

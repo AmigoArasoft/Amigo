@@ -1,13 +1,5 @@
+
 <div class="card card-info">
-	<div class="card-header">@yield('titulo')
-		@if(Auth::user()->tercero_id == 1)
-			@can('Viaje crear')
-			    <a class="btn btn-sm btn-default text-dark" href="{{ route('factura.crear') }}">
-					<i class="fas fa-plus-circle"></i> Nuevo
-				</a>
-			@endcan
-		@endif
-	</div>
 	<div class="card-body">
 		<div class="table-responsive">
 			<table id="tabla" class="table table-bordered table-striped table-hover table-sm">

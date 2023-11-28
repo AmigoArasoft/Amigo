@@ -9,7 +9,7 @@
 @endforeach
 @foreach($operadores as $d)
     @foreach($d->transportesVehiculos->sortBy('placa') as $m)
-        var veh_{{ $m->id }}="{{ $m->tercero->nombre }}";
+        var veh_{{ $m->id }}="{{ $m->tercero->nombre ?? null }}";
     @endforeach
 @endforeach
 function cambiaOperador(valor){

@@ -1,0 +1,1 @@
+<h1>Número de Vale #{{ $numero_certificado }}</h1>

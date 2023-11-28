@@ -2,7 +2,13 @@
     <li class="nav-item">
         <a href="{{ route('factura') }}" class="nav-link">
             <i class="nav-icon fas fa-file-invoice"></i>
-            <p>Informes</p>
+            <p>Informes - VIAJES</p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('facturaAutoridades') }}" class="nav-link">
+            <i class="nav-icon fas fa-file-invoice"></i>
+            <p>Informes - AMIGO</p>
         </a>
     </li>
 @endcanany

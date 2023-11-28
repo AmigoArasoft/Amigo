@@ -53,9 +53,15 @@ class ViajeController extends Controller{
 
     public function listOperator(Request $request, $id, $desde, $hasta){
         if (!$request->ajax()) return redirect('/');
+        $operadorUno = Tercero::where('id', $id)->first();
         return datatables()
             ->eloquent(Viaje::select('viajes.id', 'viajes.fecha_nombre as fecha', 'terceros.nombre as operador', 'vehiculos.placa', 'materias.nombre', 'viajes.volumen', 'viajes.valor', 'viajes.total')
-                ->where('operador_id', $id)
+                ->when($operadorUno->operador == 1, function($q) use ($id) {
+                    return $q->where('operador_id', $id);
+                })
+                ->when($operadorUno->transporte == 1 && $operadorUno->operador == 0, function($q) use ($id) {
+                    return $q->where('transporte_id', $id);
+                })
                 ->whereBetween('fecha', [$desde, $hasta])
                 ->where('eliminado', 0)
                 ->whereNull('factura_id')
@@ -132,7 +138,9 @@ class ViajeController extends Controller{
             'frente_id' => $operador->frente_id,
             'volumen' => $request->volumen,
             'valor' => $tarifa->tarifa,
-            'nro_viaje' => $request->nro_viaje ?? NULL
+            'nro_viaje' => $request->nro_viaje ?? NULL,
+            'cliente' => $request->cliente ?? NULL,
+            'destino' => $request->destino ?? NULL
         ]);
 
         $vehiculo->fill([
@@ -197,7 +205,9 @@ class ViajeController extends Controller{
             'frente_id' => $operador->frente_id,
             'volumen' => $request->volumen,
             'valor' => $tarifa->tarifa,
-            'nro_viaje' => $request->nro_viaje ?? NULL
+            'nro_viaje' => $request->nro_viaje ?? NULL,
+            'cliente' => $request->cliente ?? NULL,
+            'destino' => $request->destino ?? NULL
         ])->save();
         $vehiculo->fill([
             'conductor_id' => $request->conductor_id,
@@ -220,6 +230,16 @@ class ViajeController extends Controller{
             return $pdf->stream('certificado_origen_'.$request->id.'.pdf');
         }
         return view('mina.origen');
+    }
+
+    public function vale(Request $request){
+        if(isset($request->id)){
+            $dato = Viaje::findOrFail($request->id);
+            $carpeta = (substr(URL::current(), 0, 16) == 'http://localhost') ? '' : '/mina_app';
+            $pdf = PDF::loadView('mina.empresa.viaje.vale', compact('dato', 'carpeta'));
+            return $pdf->stream('certificado_vale_'.$request->id.'.pdf');
+        }
+        return view('mina.vale');
     }
 
     protected function validator(array $data){

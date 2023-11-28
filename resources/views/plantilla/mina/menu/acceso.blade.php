@@ -35,6 +35,14 @@
                     </a>
                 </li>
             @endcanany
+            @canany(['Topes'])
+                <li class="nav-item">
+                    <a href="{{ route('tope') }}" class="nav-link">
+                        <i class="fas fa-caret-right nav-icon"></i>
+                        <p>Topes</p>
+                    </a>
+                </li>
+            @endcanany
         </ul>
     </li>
 @endcanany

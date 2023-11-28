@@ -39,14 +39,20 @@ class FacturaController extends Controller{
     }
 
     public function create(Request $request){
-        $operadores = Tercero::where('operador', 1)->where('activo', 1)->orderBy('nombre')->get();
+        $operadores = Tercero::where('operador', 1)->orWhere('transporte', 1)->where('activo', 1)->orderBy('nombre')->get();
         $operador = $operadores->pluck('nombre', 'id');
         $ope = ($request->tercero_id) ? $request->tercero_id : $operadores->first()->id;
         $fecha = ($request->fecha) ? $request->fecha : Carbon::now()->firstOfMonth()->toDateString();
-        $desde = ($request->desde) ? $request->desde : Carbon::now()->firstOfMonth()->subMonth()->toDateString();
-        $hasta = ($request->hasta) ? $request->hasta : Carbon::now()->firstOfMonth()->subDay()->toDateString();
+        $desde = ($request->desde) ? $request->desde : Carbon::now()->firstOfMonth()->toDateString();
+        $hasta = ($request->hasta) ? $request->hasta : Carbon::now()->toDateString();
+        $operadorUno = Tercero::where('id', $ope)->first();
         $viajes = Viaje::selectRaw('material_id, materias.nombre, count(valor) as cuenta, avg(valor) as valor, sum(volumen) as volumen, sum(total) as total')
-                ->where('operador_id', $ope)
+                ->when($operadorUno->operador == 1, function($q) use ($ope) {
+                    return $q->where('operador_id', $ope);
+                })
+                ->when($operadorUno->transporte == 1 && $operadorUno->operador == 0, function($q) use ($ope) {
+                    return $q->where('transporte_id', $ope);
+                })
                 ->whereBetween('fecha', [$desde, $hasta])
                 ->where('eliminado', 0)
                 ->whereNull('factura_id')
@@ -60,10 +66,17 @@ class FacturaController extends Controller{
 
     public function store(Request $request){
         $this->validator($request->all())->validate();
+        $operadorUno = Tercero::where('id', $request->tercero_id)->first();
         $viajes = Viaje::select('id', 'fecha_nombre', 'volumen', 'valor', 'total')
-                ->where('operador_id', $request->tercero_id)
-                ->whereBetween('fecha', [$request->desde, $request->hasta])
-                ->whereNull('factura_id')->get();
+        ->when($operadorUno->operador == 1, function($q) use ($request) {
+            return $q->where('operador_id', $request->tercero_id);
+        })
+        ->when($operadorUno->transporte == 1 && $operadorUno->operador == 0, function($q) use ($request) {
+            return $q->where('transporte_id', $request->tercero_id);
+        })->whereBetween('fecha', [$request->desde, $request->hasta])
+        ->whereNull('factura_id')
+        ->get();
+
         if($viajes->count() > 0 && $viajes->sum('total')) {
             $dato = Factura::create([
                 'tercero_id' => $request->tercero_id,
@@ -71,9 +84,15 @@ class FacturaController extends Controller{
                 'desde' => $request->desde,
                 'hasta' => $request->hasta,
                 'valor' => $viajes->sum('total'),
+                'volumen' => $viajes->sum('volumen')
             ]);
             Viaje::select('id', 'fecha_nombre', 'volumen', 'valor', 'total')
-                ->where('operador_id', $request->tercero_id)
+                ->when($operadorUno->operador == 1, function($q) use ($request) {
+                    return $q->where('operador_id', $request->tercero_id);
+                })
+                ->when($operadorUno->transporte == 1 && $operadorUno->operador == 0, function($q) use ($request) {
+                    return $q->where('transporte_id', $request->tercero_id);
+                })
                 ->whereBetween('fecha', [$request->desde, $request->hasta])
                 ->whereNull('factura_id')
                 ->update(['factura_id' => $dato->id]);
@@ -89,11 +108,17 @@ class FacturaController extends Controller{
             $operadores = Tercero::where('operador', 1)->where('activo', 1)->orderBy('nombre')->get();
             $operador = $operadores->pluck('nombre', 'id');
             $ope = ($request->tercero_id) ? $request->tercero_id : $dato->tercero_id;
+            $operadorUno = Tercero::where('id', $ope)->first();
             $fecha = ($request->fecha) ? $request->fecha : $dato->fecha;
             $desde = ($request->desde) ? $request->desde : $dato->desde;
             $hasta = ($request->hasta) ? $request->hasta : $dato->hasta;
             $viajes = Viaje::selectRaw('material_id, materias.nombre, count(valor) as cuenta, avg(valor) as valor, sum(volumen) as volumen, sum(total) as total')
-                ->where('operador_id', $ope)
+                ->when($operadorUno->operador == 1, function($q) use ($ope) {
+                    return $q->where('operador_id', $ope);
+                })
+                ->when($operadorUno->transporte == 1 && $operadorUno->operador == 0, function($q) use ($ope) {
+                    return $q->where('transporte_id', $ope);
+                })
                 ->whereBetween('fecha', [$desde, $hasta])
                 ->where('eliminado', 0)
                 ->whereNull('factura_id')
@@ -106,10 +131,16 @@ class FacturaController extends Controller{
 
     public function update(Request $request, $id){
         $this->validator($request->all())->validate();
+        $operadorUno = Tercero::where('id', $request->tercero_id)->first();
         $viajes = Viaje::select('id', 'fecha_nombre', 'volumen', 'valor', 'total')
-                ->where('operador_id', $request->tercero_id)
-                ->whereBetween('fecha', [$request->desde, $request->hasta])
-                ->whereNull('factura_id')->get();
+        ->when($operadorUno->operador == 1, function($q) use ($request) {
+            return $q->where('operador_id', $request->tercero_id);
+        })
+        ->when($operadorUno->transporte == 1 && $operadorUno->operador == 0, function($q) use ($request) {
+            return $q->where('transporte_id', $request->tercero_id);
+        })->whereBetween('fecha', [$request->desde, $request->hasta])
+        ->whereNull('factura_id')
+        ->get();
         if($viajes->count() > 0 && $viajes->sum('total')) {
             $dato = Factura::findOrFail($id);
             $dato->fill([
@@ -118,9 +149,15 @@ class FacturaController extends Controller{
                 'desde' => $request->desde,
                 'hasta' => $request->hasta,
                 'valor' => $viajes->sum('total'),
+                'volumen' => $viajes->sum('volumen')
             ])->save();
             Viaje::select('id', 'fecha_nombre', 'volumen', 'valor', 'total')
-                ->where('operador_id', $request->tercero_id)
+                ->when($operadorUno->operador == 1, function($q) use ($request) {
+                    return $q->where('operador_id', $request->tercero_id);
+                })
+                ->when($operadorUno->transporte == 1 && $operadorUno->operador == 0, function($q) use ($request) {
+                    return $q->where('transporte_id', $request->tercero_id);
+                })
                 ->whereBetween('fecha', [$request->desde, $request->hasta])
                 ->whereNull('factura_id')
                 ->update(['factura_id' => $dato->id]);

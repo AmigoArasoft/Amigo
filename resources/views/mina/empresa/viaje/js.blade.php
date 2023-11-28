@@ -27,7 +27,9 @@ $(document).ready(function() {
     });
 } );
 
-function changeId(id){
-    $("#certificado_origen").val(id);
+function changeId(id, type){
+    $("#exampleModalLabel").text(type == "origen" ? "Enviar certificado de origen" : "Enviar vale")
+    $("#tipo_documento").val(type);
+    $("#id_documento_correo").val(id);
 }
 </script>

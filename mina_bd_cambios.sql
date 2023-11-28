@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 23-11-2023 a las 15:04:03
--- Versión del servidor: 10.4.25-MariaDB
--- Versión de PHP: 7.4.30
+-- Servidor: custsql-ipg13.eigbox.net
+-- Tiempo de generación: 24-11-2023 a las 16:54:10
+-- Versión del servidor: 5.6.51-91.0-log
+-- Versión de PHP: 7.0.33-0ubuntu0.16.04.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -48,7 +49,7 @@ CREATE TABLE `cubicajes` (
   `operador` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `transportador` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `observacion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -309,7 +310,7 @@ CREATE TABLE `documentos` (
   `titulo` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
   `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `archivo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -329,7 +330,7 @@ INSERT INTO `documentos` (`id`, `titulo`, `descripcion`, `archivo`, `activo`, `u
 (6, 'Contrato de concesión cesión', 'Resolución 208 del 19 ago 2010 Igeominas', 'public/documento/6Hh4PRWhhdlCnr4xTAtyk5XwMr19g0KuiU2enpL2.pdf', 1, 2, 2, '2020-05-12 05:14:49', '2020-05-12 05:14:49'),
 (7, 'Rucom', 'LISTADOS RUCOM', 'public/documento/DMucYY45j89ByacNBMO0JTYSqVWruuexXazUmYuA.pdf', 1, 2, 2, '2020-05-12 05:21:18', '2020-05-12 05:21:18'),
 (8, 'Protocolo Covid 19', 'Conjunto Garzon Romero, Nery Torres y Rockstor', 'public/documento/mS5T99cGnxS7DdEOt7lG7MGUm4MjjFuZwywpXGEb.pdf', 1, 2, 2, '2020-05-12 05:26:52', '2020-05-12 05:26:52'),
-(9, 'Rut', 'Registro único Tributario (17/11/2023)', 'public/documento/4UJ1OmIhOtQT8Ixpq3JlCuJkPu04TLCntAecXBYn.xlsx', 1, 2, 2, '2020-05-18 17:02:36', '2023-11-17 20:51:33'),
+(9, 'Rut', 'Registro único Tributario (20/11/2023)', 'public/documento/ItvRz4ShXZbao6lWuTCm3NM99dUORrstKBAzDL5S.pdf', 1, 2, 2, '2020-05-18 17:02:36', '2023-11-24 12:30:19'),
 (10, 'Documento prueba', 'Documento reciente 17/11/2023', 'public/documento/LiWosHHAVQefrmSzzuYIQuhrdPOZV2xJDaZavFfL.xlsx', 1, 2, 2, '2023-11-17 20:41:17', '2023-11-17 20:41:17'),
 (11, 'PTO', '17/11/2023', 'public/documento/QjDMVr2vzoKcPr0wG1A0Ds6sJJOVNzTEnurCp35D.pdf', 1, 2, 2, '2023-11-17 21:03:42', '2023-11-17 21:03:42');
 
@@ -342,7 +343,7 @@ INSERT INTO `documentos` (`id`, `titulo`, `descripcion`, `archivo`, `activo`, `u
 CREATE TABLE `especificacions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -383,13 +384,17 @@ CREATE TABLE `especificacion_parametro` (
 INSERT INTO `especificacion_parametro` (`especificacion_id`, `parametro_id`) VALUES
 (1, 58),
 (1, 59),
-(1, 60),
-(1, 61),
 (2, 59),
+(8, 59),
+(1, 60),
 (2, 60),
+(1, 61),
 (2, 62),
+(8, 62),
 (2, 63),
+(8, 63),
 (2, 64),
+(8, 64),
 (2, 65),
 (2, 66),
 (3, 67),
@@ -402,10 +407,6 @@ INSERT INTO `especificacion_parametro` (`especificacion_id`, `parametro_id`) VAL
 (3, 74),
 (4, 75),
 (4, 76),
-(8, 59),
-(8, 62),
-(8, 63),
-(8, 64),
 (8, 77),
 (8, 78),
 (8, 79),
@@ -436,7 +437,7 @@ CREATE TABLE `facturas` (
   `hasta` date NOT NULL,
   `hasta_nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `valor` bigint(20) UNSIGNED NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -488,7 +489,7 @@ CREATE TABLE `failed_jobs` (
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -500,7 +501,7 @@ CREATE TABLE `failed_jobs` (
 CREATE TABLE `grupomats` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -553,7 +554,7 @@ INSERT INTO `grupomat_gruposubmat` (`grupomat_id`, `gruposubmat_id`) VALUES
 CREATE TABLE `grupos` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `nombre` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -585,7 +586,7 @@ INSERT INTO `grupos` (`id`, `nombre`, `activo`, `user_create_id`, `user_update_i
 CREATE TABLE `gruposubmats` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -628,8 +629,8 @@ INSERT INTO `gruposubmat_material` (`gruposubmat_id`, `material_id`) VALUES
 (1, 1),
 (1, 2),
 (1, 4),
-(1, 6),
 (2, 5),
+(2, 6),
 (2, 7),
 (2, 8),
 (2, 9),
@@ -637,7 +638,6 @@ INSERT INTO `gruposubmat_material` (`gruposubmat_id`, `material_id`) VALUES
 (3, 11),
 (3, 12),
 (3, 13),
-(3, 26),
 (4, 14),
 (5, 15),
 (6, 16),
@@ -649,7 +649,8 @@ INSERT INTO `gruposubmat_material` (`gruposubmat_id`, `material_id`) VALUES
 (10, 22),
 (11, 23),
 (11, 24),
-(11, 25);
+(11, 25),
+(3, 26);
 
 -- --------------------------------------------------------
 
@@ -678,22 +679,10 @@ INSERT INTO `grupo_parametro` (`grupo_id`, `parametro_id`) VALUES
 (4, 9),
 (4, 10),
 (4, 11),
-(4, 33),
-(4, 34),
-(4, 35),
-(4, 36),
-(4, 37),
-(4, 38),
-(4, 53),
-(4, 54),
-(4, 55),
-(4, 56),
-(4, 57),
 (5, 12),
 (5, 13),
 (5, 14),
 (5, 15),
-(5, 90),
 (6, 16),
 (6, 17),
 (6, 18),
@@ -711,6 +700,12 @@ INSERT INTO `grupo_parametro` (`grupo_id`, `parametro_id`) VALUES
 (6, 30),
 (6, 31),
 (6, 32),
+(4, 33),
+(4, 34),
+(4, 35),
+(4, 36),
+(4, 37),
+(4, 38),
 (7, 39),
 (7, 40),
 (7, 41),
@@ -721,10 +716,15 @@ INSERT INTO `grupo_parametro` (`grupo_id`, `parametro_id`) VALUES
 (7, 46),
 (7, 47),
 (7, 48),
-(7, 51),
-(7, 52),
 (8, 49),
 (8, 50),
+(7, 51),
+(7, 52),
+(4, 53),
+(4, 54),
+(4, 55),
+(4, 56),
+(4, 57),
 (9, 58),
 (9, 59),
 (9, 60),
@@ -756,7 +756,8 @@ INSERT INTO `grupo_parametro` (`grupo_id`, `parametro_id`) VALUES
 (9, 86),
 (9, 87),
 (9, 88),
-(9, 89);
+(9, 89),
+(5, 90);
 
 -- --------------------------------------------------------
 
@@ -767,7 +768,7 @@ INSERT INTO `grupo_parametro` (`grupo_id`, `parametro_id`) VALUES
 CREATE TABLE `materials` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `nombre` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -801,25 +802,25 @@ CREATE TABLE `material_especificacion` (
 INSERT INTO `material_especificacion` (`material_id`, `especificacion_id`) VALUES
 (7, 1),
 (8, 2),
+(12, 2),
+(13, 2),
 (9, 3),
 (10, 4),
 (11, 4),
-(12, 2),
-(13, 2),
 (15, 5),
 (16, 6),
 (17, 7),
 (18, 8),
-(18, 9),
 (19, 8),
-(19, 9),
 (20, 8),
-(20, 9),
 (23, 8),
-(23, 10),
 (24, 8),
-(24, 10),
 (25, 8),
+(18, 9),
+(19, 9),
+(20, 9),
+(23, 10),
+(24, 10),
 (25, 10);
 
 -- --------------------------------------------------------
@@ -865,7 +866,7 @@ INSERT INTO `material_submaterial` (`material_id`, `submaterial_id`) VALUES
 CREATE TABLE `materias` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -887,7 +888,7 @@ INSERT INTO `materias` (`id`, `nombre`, `activo`, `user_create_id`, `user_update
 (9, 'AFIRMADO', 1, 1, 1, '2020-12-04 03:20:29', '2020-12-04 03:20:29'),
 (10, 'BLOQUES (>30 cm.)', 1, 1, 1, '2020-12-04 03:21:00', '2020-12-04 03:21:00'),
 (11, 'RAJÓN (≤30 cm. - 3\")', 1, 1, 1, '2020-12-04 03:21:19', '2020-12-04 03:21:19'),
-(12, 'RELLENO TOLERABLE (Sobrante de Zaranda)', 1, 1, 2, '2020-12-04 03:21:39', '2023-11-23 11:42:09'),
+(12, 'RELLENO TOLERABLE', 1, 1, 2, '2020-12-04 03:21:39', '2023-11-23 11:42:09'),
 (13, 'RELLENO MARGINAL (Piedra filtro)', 1, 1, 2, '2020-12-04 03:21:56', '2023-11-23 11:42:24'),
 (14, 'RECEBO MEJORADO', 1, 1, 1, '2020-12-04 03:22:22', '2020-12-04 03:22:47'),
 (15, 'ARENA', 1, 1, 1, '2020-12-04 03:23:09', '2020-12-04 03:23:09'),
@@ -972,14 +973,17 @@ CREATE TABLE `model_has_roles` (
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (1, 'App\\Models\\User', 1),
 (1, 'App\\Models\\User', 2),
-(1, 'App\\Models\\User', 6),
-(1, 'App\\Models\\User', 7),
-(2, 'App\\Models\\User', 3),
+(4, 'App\\Models\\User', 3),
 (2, 'App\\Models\\User', 4),
 (2, 'App\\Models\\User', 5),
+(1, 'App\\Models\\User', 6),
+(1, 'App\\Models\\User', 7),
 (2, 'App\\Models\\User', 8),
 (2, 'App\\Models\\User', 9),
-(2, 'App\\Models\\User', 10);
+(2, 'App\\Models\\User', 10),
+(4, 'App\\Models\\User', 11),
+(4, 'App\\Models\\User', 12),
+(2, 'App\\Models\\User', 13);
 
 -- --------------------------------------------------------
 
@@ -990,7 +994,7 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 CREATE TABLE `parametros` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `nombre` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1210,7 +1214,8 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
 (1, 'Super administrador', 'web', '2020-04-10 03:13:32', '2020-04-10 03:13:32'),
 (2, 'Digitador', 'web', '2020-05-04 03:15:31', '2020-05-04 03:15:31'),
-(3, 'Operador', 'web', '2020-06-19 15:11:26', '2020-06-19 15:11:26');
+(3, 'Operador', 'web', '2020-06-19 15:11:26', '2020-06-19 15:11:26'),
+(4, 'Supervisor', 'web', '2023-11-23 21:57:19', '2023-11-23 21:57:19');
 
 -- --------------------------------------------------------
 
@@ -1229,72 +1234,54 @@ CREATE TABLE `role_has_permissions` (
 
 INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (1, 1),
-(1, 2),
-(1, 3),
 (2, 1),
-(2, 2),
 (3, 1),
-(3, 2),
 (4, 1),
 (5, 1),
-(5, 2),
-(5, 3),
 (6, 1),
 (7, 1),
 (8, 1),
 (9, 1),
-(9, 2),
-(9, 3),
 (10, 1),
 (11, 1),
 (12, 1),
 (13, 1),
-(13, 3),
 (14, 1),
 (15, 1),
 (16, 1),
 (17, 1),
-(17, 3),
 (18, 1),
 (19, 1),
 (20, 1),
 (21, 1),
-(21, 3),
 (22, 1),
 (23, 1),
 (24, 1),
 (25, 1),
-(25, 3),
 (26, 1),
 (27, 1),
 (28, 1),
 (29, 1),
-(29, 3),
 (30, 1),
 (31, 1),
 (32, 1),
 (33, 1),
-(33, 3),
 (34, 1),
 (35, 1),
 (36, 1),
 (37, 1),
-(37, 3),
 (38, 1),
 (39, 1),
 (40, 1),
 (41, 1),
-(41, 3),
 (42, 1),
 (43, 1),
 (44, 1),
 (45, 1),
-(45, 3),
 (46, 1),
 (47, 1),
 (48, 1),
 (49, 1),
-(49, 3),
 (50, 1),
 (51, 1),
 (52, 1),
@@ -1303,17 +1290,63 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (55, 1),
 (56, 1),
 (57, 1),
-(57, 3),
 (58, 1),
 (59, 1),
 (60, 1),
 (61, 1),
-(61, 2),
 (62, 1),
-(62, 2),
 (63, 1),
+(64, 1),
+(1, 2),
+(2, 2),
+(3, 2),
+(5, 2),
+(9, 2),
+(61, 2),
+(62, 2),
 (63, 2),
-(64, 1);
+(1, 3),
+(5, 3),
+(9, 3),
+(13, 3),
+(17, 3),
+(21, 3),
+(25, 3),
+(29, 3),
+(33, 3),
+(37, 3),
+(41, 3),
+(45, 3),
+(49, 3),
+(57, 3),
+(1, 4),
+(2, 4),
+(3, 4),
+(4, 4),
+(5, 4),
+(6, 4),
+(7, 4),
+(8, 4),
+(9, 4),
+(10, 4),
+(11, 4),
+(12, 4),
+(13, 4),
+(15, 4),
+(17, 4),
+(18, 4),
+(19, 4),
+(20, 4),
+(45, 4),
+(49, 4),
+(50, 4),
+(57, 4),
+(58, 4),
+(59, 4),
+(61, 4),
+(62, 4),
+(63, 4),
+(64, 4);
 
 -- --------------------------------------------------------
 
@@ -1324,7 +1357,7 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 CREATE TABLE `tarifas` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1363,18 +1396,18 @@ INSERT INTO `tarifa_material` (`tarifa_id`, `material_id`) VALUES
 (1, 1),
 (1, 2),
 (1, 4),
-(1, 6),
 (2, 5),
+(1, 6),
 (2, 7),
 (2, 8),
 (2, 9),
-(2, 16),
-(3, 17),
-(4, 12),
-(5, 13),
 (6, 10),
 (6, 11),
+(4, 12),
+(5, 13),
 (10, 15),
+(2, 16),
+(3, 17),
 (10, 18),
 (10, 19),
 (10, 20),
@@ -1382,7 +1415,8 @@ INSERT INTO `tarifa_material` (`tarifa_id`, `material_id`) VALUES
 (10, 22),
 (10, 23),
 (10, 24),
-(10, 25);
+(10, 25),
+(4, 26);
 
 -- --------------------------------------------------------
 
@@ -1393,7 +1427,7 @@ INSERT INTO `tarifa_material` (`tarifa_id`, `material_id`) VALUES
 CREATE TABLE `temas` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `nombre` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1437,17 +1471,17 @@ CREATE TABLE `tema_subtema` (
 INSERT INTO `tema_subtema` (`tema_id`, `subtema_id`) VALUES
 (1, 39),
 (2, 40),
-(3, 42),
-(3, 44),
-(4, 43),
-(7, 48),
 (8, 41),
-(8, 52),
+(3, 42),
+(4, 43),
+(3, 44),
 (9, 44),
 (10, 45),
 (11, 46),
 (12, 47),
-(13, 51);
+(7, 48),
+(13, 51),
+(8, 52);
 
 -- --------------------------------------------------------
 
@@ -1466,11 +1500,11 @@ CREATE TABLE `terceros` (
   `direccion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `telefono` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `operador` tinyint(1) NOT NULL DEFAULT 0,
-  `transporte` tinyint(1) NOT NULL DEFAULT 0,
+  `operador` tinyint(1) NOT NULL DEFAULT '0',
+  `transporte` tinyint(1) NOT NULL DEFAULT '0',
   `rucom` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `firma` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1482,9 +1516,9 @@ CREATE TABLE `terceros` (
 --
 
 INSERT INTO `terceros` (`id`, `persona_id`, `comprador_id`, `documento_id`, `documento`, `frente_id`, `nombre`, `direccion`, `telefono`, `email`, `operador`, `transporte`, `rucom`, `firma`, `activo`, `user_create_id`, `user_update_id`, `created_at`, `updated_at`) VALUES
-(1, 2, 49, 7, '900349029-7', NULL, 'Garzón Romero G. S.A.S.', 'Km 4 Vía Mosquera La Mesa Vereda Balsillas Hacienda Venecia Mosquera Cundinamarca', '3002182686', 'villaufaz1@hotmail.com', 1, 1, NULL, NULL, 0, 1, 2, '2020-04-10 03:13:33', '2023-11-22 17:59:47'),
-(2, 2, 49, 6, '890.930.545-1', 90, 'Mincivil S.A.', 'Carrera 11 No. 98-07 Bogotá', '6760212', 'clopera@mincivil.com', 1, 0, NULL, NULL, 1, 2, 2, '2020-04-10 16:50:00', '2023-11-22 15:40:04'),
-(3, 1, 49, 3, '52.550.090', 14, 'Nery Patricia Torres Novoa', 'Calle 3 # 17-08 oficina 283 Parque Industrias San Jorge Madrid Cundinamarca', '3108565909', 'torresrec@hotmail.com', 1, 0, NULL, NULL, 1, 2, 2, '2020-04-10 16:52:46', '2023-11-22 15:18:10'),
+(1, 2, 49, 6, '900349029-7', NULL, 'Garzón Romero G. S.A.S.', 'Km 4 Vía Mosquera La Mesa Vereda Balsillas Hacienda Venecia Mosquera Cundinamarca', '3002182686', 'gerencia@garzonromero.com', 1, 1, NULL, NULL, 1, 1, 2, '2020-04-10 03:13:33', '2023-11-24 12:43:54'),
+(2, 2, 49, 6, '890.930.545-1', NULL, 'Mincivil S.A.', 'Carrera 11 No. 98-07 Bogotá', '6760212', 'clopera@mincivil.com', 1, 0, NULL, NULL, 0, 2, 2, '2020-04-10 16:50:00', '2023-11-23 16:43:18'),
+(3, 1, 49, 3, '52.550.090', NULL, 'Nery Patricia Torres Novoa', 'Calle 3 # 17-08 oficina 283 Parque Industrias San Jorge Madrid Cundinamarca', '3108565909', 'torresrec@hotmail.com', 1, 0, NULL, NULL, 0, 2, 2, '2020-04-10 16:52:46', '2023-11-23 16:43:12'),
 (4, 2, NULL, 6, '901.371.819-4', NULL, 'Rockstor SAS', 'KM 4 VIA MOSQUERA-LA MESA VDA BALSILLA Mosquera Cundinamarca', '3132854960', 'contabilidadrockstor20@gmail.com', 0, 1, NULL, 'public/firma/vm7j1yttxJgWmlxU97A6w5NRUVvzqfUG7YMPepVj.png', 1, 2, 2, '2020-04-10 16:55:39', '2023-11-17 21:10:20'),
 (5, 2, NULL, 6, '111', NULL, 'Abel Agudelo', '111', '111', 'nose@nose.com', 0, 1, NULL, NULL, 1, 2, 2, '2020-04-10 18:24:53', '2020-04-10 18:28:21'),
 (6, 2, NULL, 6, '222', NULL, 'HS Construcciones', '222', '222', 'nose@nose.com', 0, 1, NULL, NULL, 1, 2, 2, '2020-04-10 18:26:12', '2020-04-10 18:29:01'),
@@ -1638,9 +1672,13 @@ INSERT INTO `terceros` (`id`, `persona_id`, `comprador_id`, `documento_id`, `doc
 (154, 2, NULL, 6, 'Constru1234', NULL, 'Construvial S.A.S.', 'constru con vial', 'Constru1234', 'constru@vial.com', 0, 1, NULL, NULL, 1, 6, 6, '2021-07-02 18:47:36', '2021-07-02 18:48:06'),
 (155, 2, NULL, 6, 'Giovani1234', NULL, 'Giovani Martínez', 'Giovani con Martinez', 'Giovani1234', 'giovani@martinez.com', 0, 1, NULL, NULL, 1, 6, 6, '2021-07-07 21:58:43', '2021-07-07 21:59:14'),
 (156, 2, 49, 6, '90116037265', 13, 'A&C TRANSPORTES EXCAVACIONES Y SUMINISTROS SAS', 'CALLE 17 13 E 48', '3102557495', 'alexanderalvarado0714@gmail.com', 1, 1, NULL, NULL, 1, 2, 2, '2022-12-20 16:54:26', '2023-11-20 17:36:39'),
-(157, 2, 49, 6, '90162007930', 12, 'AGREGADOS Y CONSTRUCCIONES MAJES SAS', 'CALLE 7 9-67 CASA 9', '3104730625', 'agregadosconstmajes@hotmail.com', 1, 1, NULL, NULL, 1, 2, 2, '2022-12-20 16:58:28', '2023-11-22 18:29:41'),
+(157, 2, 49, 6, '90162007930', 12, 'AGREGADOS Y CONSTRUCCIONES MAJES SAS', 'CALLE 7 9-67 CASA 9', '3104730625', 'agregadosyconstruccionesmajes@gmail.com', 1, 1, NULL, NULL, 1, 2, 2, '2022-12-20 16:58:28', '2023-11-24 12:05:17'),
 (158, 1, NULL, 3, '1026593679', NULL, 'Juan David Segura Pérez', 'Calle 17 # 05 E 35 Portón de Mallorca torre 4 apto 601', '3016510671', 'ingminas@garzonromero.com', 0, 0, NULL, NULL, 1, 2, 2, '2022-12-20 21:39:40', '2022-12-20 21:39:40'),
-(159, 1, NULL, 5, '123456789', NULL, 'Prueba', 'Prueba', '111', 'nose@nose.com', 0, 0, NULL, NULL, 1, 2, 2, '2023-11-17 21:15:39', '2023-11-17 21:15:39');
+(159, 1, NULL, 5, '123456789', NULL, 'Prueba', 'Prueba', '111', 'nose@nose.com', 0, 0, NULL, NULL, 1, 2, 2, '2023-11-17 21:15:39', '2023-11-17 21:15:39'),
+(160, 1, NULL, 3, '1065814731', NULL, 'Jorge Luis Cuello Ochoa', 'Carrera 81 No 77 A 45 Apto 301 La Granja Bogotá', '3176639478', 'ingminas@garzonromero.com', 0, 0, NULL, NULL, 1, 2, 2, '2023-11-24 12:13:49', '2023-11-24 12:13:49'),
+(161, 2, NULL, 6, '901236277-5', NULL, 'Forza Agregados y Servicios SAS', 'CL 141 N 9 40 P2 OF 201', '3006162449', 'contable@forzaays.com', 0, 1, NULL, NULL, 1, 12, 12, '2023-11-24 13:09:47', '2023-11-24 13:11:50'),
+(162, 1, NULL, 3, '74080199', NULL, 'Alexander Alvarado Santos', 'Calle 17 13 E 48', '3102557495', 'alexanderalvarado0714@gmail.com', 0, 0, NULL, NULL, 1, 2, 2, '2023-11-24 15:44:13', '2023-11-24 15:44:13'),
+(163, 1, NULL, 3, '74380453', NULL, 'Hoover Hernan Estpiñan Estupiñan', 'CL 7 9 67 CA 9', '3104730625', 'agregadosyconstruccionesmajes@gmail.com', 0, 0, NULL, NULL, 1, 2, 2, '2023-11-24 15:48:48', '2023-11-24 15:50:18');
 
 -- --------------------------------------------------------
 
@@ -1663,8 +1701,8 @@ INSERT INTO `tercero_contacto` (`tercero_id`, `contacto_id`, `funcion_id`) VALUE
 (2, 9, 8),
 (3, 3, 8),
 (4, 8, 8),
-(1, 17, 11),
-(1, 159, 11),
+(156, 162, 8),
+(157, 163, 8),
 (2, 17, 11),
 (2, 18, 11),
 (2, 19, 11),
@@ -1687,14 +1725,13 @@ INSERT INTO `tercero_contacto` (`tercero_id`, `contacto_id`, `funcion_id`) VALUE
 (7, 18, 11),
 (7, 20, 11),
 (33, 34, 11),
-(157, 8, 11),
-(157, 159, 11),
 (2, 10, 33),
 (1, 3, 34),
 (1, 12, 34),
 (1, 15, 38),
 (3, 40, 38),
 (1, 32, 53),
+(1, 160, 54),
 (3, 39, 54),
 (3, 41, 55),
 (3, 42, 56);
@@ -1754,9 +1791,13 @@ CREATE TABLE `tercero_tarifa` (
 INSERT INTO `tercero_tarifa` (`tercero_id`, `tarifa_id`, `tarifa`) VALUES
 (1, 6, 10000.00),
 (2, 6, 15000.00),
-(157, 1, 11500.00),
+(157, 1, 4000.00),
 (157, 2, 5000.00),
-(157, 3, 10000.00);
+(157, 3, 7200.00),
+(157, 4, 10000.00),
+(157, 5, 11500.00),
+(157, 6, 14000.00),
+(157, 10, 28000.00);
 
 -- --------------------------------------------------------
 
@@ -1775,17 +1816,19 @@ CREATE TABLE `tercero_transporte` (
 
 INSERT INTO `tercero_transporte` (`tercero_id`, `transporte_id`) VALUES
 (1, 1),
+(3, 1),
 (1, 2),
 (1, 3),
+(2, 3),
+(3, 3),
+(4, 3),
+(5, 3),
+(6, 3),
 (1, 4),
 (1, 5),
-(1, 87),
-(2, 3),
 (2, 5),
 (2, 6),
 (2, 7),
-(3, 1),
-(3, 3),
 (3, 7),
 (3, 33),
 (3, 35),
@@ -1832,6 +1875,7 @@ INSERT INTO `tercero_transporte` (`tercero_id`, `transporte_id`) VALUES
 (3, 83),
 (3, 84),
 (3, 85),
+(1, 87),
 (3, 87),
 (3, 89),
 (3, 90),
@@ -1898,15 +1942,7 @@ INSERT INTO `tercero_transporte` (`tercero_id`, `transporte_id`) VALUES
 (3, 152),
 (3, 153),
 (3, 154),
-(3, 155),
-(4, 3),
-(5, 3),
-(6, 3),
-(156, 1),
-(156, 43),
-(156, 76),
-(156, 156),
-(157, 157);
+(3, 155);
 
 -- --------------------------------------------------------
 
@@ -1918,7 +1954,7 @@ CREATE TABLE `transporte` (
   `id` bigint(20) NOT NULL,
   `activo` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `fecha_nombre` varchar(255) NOT NULL
@@ -1940,14 +1976,14 @@ INSERT INTO `transporte` (`id`, `activo`, `nombre`, `created_at`, `updated_at`, 
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tercero_id` bigint(20) UNSIGNED NOT NULL DEFAULT 1,
+  `tercero_id` bigint(20) UNSIGNED NOT NULL DEFAULT '1',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `telefono` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1961,14 +1997,17 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `tercero_id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `telefono`, `activo`, `user_create_id`, `user_update_id`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Edwin Marvin Villarreal Hernández', 'edwinvillarreal@hotmail.com', NULL, '$2y$10$R0WRes37JEQR4umhAxbji.Mj4lMDbHGyu19e43mbNDEepLqk16VJ6', NULL, '3007481793', 1, 1, 1, '2020-04-10 03:13:33', '2020-10-11 01:57:50'),
 (2, 1, 'Miguel Ángel Salamanca Rodríguez', 'masalaro@gmail.com', NULL, '$2a$12$cG.LTOAFOVhztg5OtVwVMuAObvsMvtTz9ZBLhvYRIirO0AvOTfbkO', NULL, '3007740596', 1, 1, 2, '2020-04-10 03:13:33', '2020-06-01 01:38:48'),
-(3, 1, 'Gloria Patricia Rodríguez Calderón', 'villaufazadmon@gmail.com', NULL, '$2a$12$cG.LTOAFOVhztg5OtVwVMuAObvsMvtTz9ZBLhvYRIirO0AvOTfbkO', NULL, '3125408487', 1, 2, 3, '2020-05-04 03:25:32', '2020-05-26 19:38:28'),
+(3, 1, 'Gloria Patricia Rodríguez Calderón', 'asisadtivo@garzonromero.com', NULL, '$2y$10$JAF0fG1I/v3dgY.QqXlEPOyjmA97lQFiV7XHbXYkdtNb/Gf2heZMm', NULL, '3125408487', 1, 2, 2, '2020-05-04 03:25:32', '2023-11-24 12:47:26'),
 (4, 1, 'Julián Camilo Gómez Güiza', 'camilo1053gomez@gmail.com', NULL, '$2y$10$z8xOeT554TP33mJ1MNfyl.qtdegCtuyG3jep3j0PPio0Y6y6ij00u', NULL, '3105706770', 0, 2, 2, '2020-05-12 00:15:15', '2020-09-14 19:56:21'),
 (5, 1, 'Juan Julián Alberto Méndez Garzón', 'asisamb@garzonromero.com', NULL, '$2y$10$oprYjZW4yqizhLyoSF4z0.ExloxJhL977Oj4huGeMvId8Z3l.JPsG', NULL, '3138820178', 0, 2, 2, '2020-06-10 02:18:36', '2020-09-14 20:04:29'),
 (6, 1, 'Angelo Giovani Echeverry Vanegas', 'director@garzonromero.com', NULL, '$2y$10$TLZX7j/V4Od4avhzsbk5zeQ9HziccXoINapXmFf2bGoXo3hriCXza', NULL, '3219326536', 0, 2, 2, '2020-06-17 23:41:21', '2022-06-28 13:18:20'),
 (7, 1, 'Claudia Patricia Garzón Orjuela', 'gerencia@garzonromero.com', NULL, '$2y$10$chQ1kUrC290cdkPBozNbfe3MygVprVwcvK.34oJxWhFeD5J2obQqu', NULL, '3183523242', 1, 2, 7, '2020-06-18 17:39:49', '2020-08-11 18:34:42'),
 (8, 3, 'Nery Patricia Torres Novoa', 'torresrec@hotmail.com', NULL, '$2y$10$0kf4piJRWDSS4oMjVZGfp.lYXapmetWfN9shzlF/OwVtCFKSPp1Ae', NULL, '3108565909', 0, 2, 2, '2020-06-19 15:12:17', '2021-07-17 11:43:32'),
 (9, 1, 'Adriana Cecilia Ruiz Castro', 'adrianaruiz0824@gmail.com', NULL, '$2y$10$Ex2pPbLd.uQCvVUOhBE.ZOMZutJhhPa/oHn8vcX28r0VMaX/A1/sS', NULL, '3219831708', 0, 2, 2, '2020-08-14 11:51:49', '2020-09-14 19:56:50'),
-(10, 1, 'Juan David Segura Pérez', 'ingminas@garzonromero.com', NULL, '$2y$10$JqXOru1rSiBR3yuSt8dhx.ZiuK47GUSfsrrm9RbveN3jMo0IjI4lm', NULL, '3016510671', 0, 2, 2, '2022-12-20 21:41:12', '2023-09-13 12:37:39');
+(10, 1, 'Juan David Segura Pérez', 'ingmina@garzonromero.com', NULL, '$2y$10$JqXOru1rSiBR3yuSt8dhx.ZiuK47GUSfsrrm9RbveN3jMo0IjI4lm', NULL, '3016510671', 0, 2, 2, '2022-12-20 21:41:12', '2023-11-24 12:50:27'),
+(11, 1, 'Rainel Urdaneta', 'urainel@gmail.com', NULL, '$2y$10$HhCnsGnHctfPjcpD.SzIJeCM9yN7vKpXTsvTw/mtDpOL/THo2rCo.', NULL, '997166926', 0, 2, 2, '2023-11-23 21:58:23', '2023-11-24 12:47:45'),
+(12, 1, 'Jorge Luis Cuello Ochoa', 'ingminas@garzonromero.com', NULL, '$2y$10$ZxjoZGg.EbpOcpc8wgqK8uzIj8Ta5DJZnm.IJJ8qA4Hoxr8.13RIm', NULL, '3176639478', 1, 2, 2, '2023-11-24 12:51:15', '2023-11-24 12:51:15'),
+(13, 1, 'Erick Galindo Melo', 'despachos@garzonromero.com', NULL, '$2y$10$FLoU2geUjkqpc6YPazxN6eY1qGDRED8m4I5xN62LD3JOCXhyPdmFW', NULL, '3169921589', 1, 2, 2, '2023-11-24 12:53:56', '2023-11-24 12:53:56');
 
 -- --------------------------------------------------------
 
@@ -1983,7 +2022,7 @@ CREATE TABLE `vehiculos` (
   `placa` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
   `volumen` double(5,2) UNSIGNED NOT NULL,
   `marca` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -2589,7 +2628,10 @@ INSERT INTO `vehiculos` (`id`, `tercero_id`, `conductor_id`, `placa`, `volumen`,
 (591, 1, 17, 'XY1234', 66.32, 'MACK', 1, 2, 2, '2023-11-17 19:29:18', '2023-11-17 19:29:18'),
 (592, 2, 25, 'XY1237', 10.00, 'MACK', 1, 2, 2, '2023-11-17 21:13:50', '2023-11-17 21:13:50'),
 (593, NULL, NULL, 'XY1239', 15.56, 'MACK', 1, 2, 2, '2023-11-20 17:46:51', '2023-11-20 17:46:51'),
-(594, 157, 159, 'XY1235', 16.50, 'MACK', 1, 2, 2, '2023-11-22 18:30:17', '2023-11-22 18:30:17');
+(594, 157, 159, 'XY1235', 16.50, 'MACK', 1, 2, 2, '2023-11-22 18:30:17', '2023-11-22 18:30:17'),
+(595, 5, 19, 'SBL404', 15.00, 'Chevrolet', 1, 2, 2, '2023-11-23 16:37:34', '2023-11-23 16:37:34'),
+(596, 7, 17, 'UST119', 6.00, 'Chevrolet', 1, 2, 2, '2023-11-23 16:40:33', '2023-11-23 16:40:33'),
+(597, 7, 18, 'SYL060', 22.00, 'Mack', 1, 2, 2, '2023-11-23 16:41:17', '2023-11-23 16:41:17');
 
 -- --------------------------------------------------------
 
@@ -2611,8 +2653,8 @@ CREATE TABLE `viajes` (
   `volumen` double(5,2) UNSIGNED NOT NULL,
   `valor` double(8,2) UNSIGNED NOT NULL,
   `total` double(10,2) UNSIGNED NOT NULL,
-  `eliminado` tinyint(1) NOT NULL DEFAULT 0,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `eliminado` tinyint(1) NOT NULL DEFAULT '0',
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
   `user_create_id` bigint(20) UNSIGNED NOT NULL,
   `user_update_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -12898,7 +12940,12 @@ INSERT INTO `viajes` (`id`, `fecha`, `fecha_nombre`, `factura_id`, `vehiculo_id`
 (10237, '2023-11-22', '22 de November de 2023', NULL, 391, 34, 2, 3, 2, 14, 14.00, 15000.00, 210000.00, 0, 1, 2, 2, '2023-11-22 14:45:40', '2023-11-22 14:45:40', 5, NULL),
 (10238, '2023-11-22', '22 de November de 2023', NULL, 557, 34, 2, 3, 2, 90, 6.00, 15000.00, 90000.00, 0, 1, 2, 2, '2023-11-22 15:40:28', '2023-11-22 15:40:35', 5, '14475'),
 (10239, '2023-11-22', '22 de November de 2023', 27, 594, 159, 157, 157, 10, 12, 16.50, 10000.00, 165000.00, 0, 1, 2, 2, '2023-11-22 18:32:25', '2023-11-22 18:35:03', 3, '1784'),
-(10240, '2023-11-23', '23 de November de 2023', NULL, 590, 17, 156, 1, 6, 13, 10.00, 16000.00, 160000.00, 0, 1, 2, 2, '2023-11-23 11:23:56', '2023-11-23 11:23:56', 1, '10');
+(10240, '2023-11-23', '23 de November de 2023', NULL, 590, 17, 156, 1, 6, 13, 10.00, 16000.00, 160000.00, 0, 1, 2, 2, '2023-11-23 11:23:56', '2023-11-23 11:23:56', 1, '10'),
+(10241, '2023-11-23', '23 de November de 2023', NULL, 379, NULL, 157, 109, 12, 12, 14.82, 10000.00, 148200.00, 0, 1, 2, 2, '2023-11-23 16:34:10', '2023-11-23 16:34:10', 3, '4521'),
+(10242, '2023-11-23', '23 de November de 2023', NULL, 117, NULL, 157, 57, 5, 12, 15.09, 5000.00, 75450.00, 0, 1, 2, 2, '2023-11-23 16:44:14', '2023-11-23 16:44:14', 2, '1234'),
+(10243, '2023-11-23', '23 de November de 2023', NULL, 595, 19, 157, 5, 11, 12, 15.00, 14000.00, 210000.00, 0, 1, 2, 2, '2023-11-23 16:45:31', '2023-11-23 16:45:31', 3, '7458'),
+(10244, '2023-11-23', '23 de November de 2023', NULL, 596, 17, 157, 7, 10, 12, 6.00, 14000.00, 84000.00, 0, 1, 2, 2, '2023-11-23 16:46:16', '2023-11-23 16:46:16', 3, '2365'),
+(10245, '2023-11-23', '23 de November de 2023', NULL, 597, 18, 157, 7, 6, 12, 21.00, 4000.00, 84000.00, 0, 1, 2, 2, '2023-11-23 16:51:34', '2023-11-23 16:52:13', 2, 'gr 1234 forza 2234');
 
 --
 -- Índices para tablas volcadas
@@ -13256,7 +13303,7 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tarifas`
@@ -13274,7 +13321,7 @@ ALTER TABLE `temas`
 -- AUTO_INCREMENT de la tabla `terceros`
 --
 ALTER TABLE `terceros`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
 
 --
 -- AUTO_INCREMENT de la tabla `transporte`
@@ -13286,19 +13333,19 @@ ALTER TABLE `transporte`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `vehiculos`
 --
 ALTER TABLE `vehiculos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=595;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=598;
 
 --
 -- AUTO_INCREMENT de la tabla `viajes`
 --
 ALTER TABLE `viajes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10241;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10246;
 
 --
 -- Restricciones para tablas volcadas

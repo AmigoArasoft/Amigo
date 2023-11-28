@@ -43,6 +43,17 @@
 		    @endif
 		</div>
 	</div>
+	<div class="col-md-2">
+		<div class="form-group">
+			{{ Form::label('cliente', 'Cliente:') }}
+			{{ Form::text('cliente', (!isset($dato)) ? $vehi->cliente : null, ['class' => $errors->first('cliente') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'placeholder' => 'Cliente del viaje']) }}
+			@if($errors->has('cliente'))
+				<div class="invalid-feedback d-block">
+		        	{{ $errors->first('cliente') }}
+		      	</div>
+		    @endif
+		</div>
+	</div>
 </div>
 <div class="row">
 	<div class="col-md-2">
@@ -81,10 +92,21 @@
 	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('nro_viaje', 'Número de Vale (Opcional):') }}
-			{{ Form::text('nro_viaje', (!isset($dato)) ? $vehi->nro_viaje : null, ['class' => $errors->first('nro_viaje') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm']) }}
+			{{ Form::text('nro_viaje', (!isset($dato)) ? $vehi->nro_viaje : null, ['class' => $errors->first('nro_viaje') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'placeholder' => 'Número de vale']) }}
 			@if($errors->has('nro_viaje'))
 				<div class="invalid-feedback d-block">
 		        	{{ $errors->first('nro_viaje') }}
+		      	</div>
+		    @endif
+		</div>
+	</div>
+	<div class="col-md-2">
+		<div class="form-group">
+			{{ Form::label('destino', 'Destino:') }}
+			{{ Form::text('destino', (!isset($dato)) ? $vehi->destino : null, ['class' => $errors->first('destino') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'placeholder' => 'Destino del viaje']) }}
+			@if($errors->has('destino'))
+				<div class="invalid-feedback d-block">
+		        	{{ $errors->first('destino') }}
 		      	</div>
 		    @endif
 		</div>

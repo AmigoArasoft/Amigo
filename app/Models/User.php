@@ -51,4 +51,8 @@ class User extends Authenticatable{
     public function empresa(){
         return $this->belongsTo(Tercero::class, 'tercero_id');
     }
+
+    public function role(){
+        return $this->hasOne(ModelHasRoles::class, 'model_id');
+    }
 }

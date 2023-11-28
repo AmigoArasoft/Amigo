@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class Viaje extends Model{
-    protected $fillable = ['fecha', 'factura', 'vehiculo_id', 'conductor_id', 'operador_id', 'transporte_id', 'material_id', 'subgrupo_id', 'frente_id', 'volumen', 'valor', 'activo', 'nro_viaje'];
+    protected $fillable = ['fecha', 'factura', 'vehiculo_id', 'conductor_id', 'operador_id', 'transporte_id', 'material_id', 'subgrupo_id', 'frente_id', 'volumen', 'valor', 'activo', 'nro_viaje', 'destino', 'cliente'];
 
     protected static function boot(){
         parent::boot();
@@ -25,6 +25,10 @@ class Viaje extends Model{
 
     public function vehiculo(){
         return $this->belongsTo(Vehiculo::class);
+    }
+
+    public function usuarioCreado(){
+        return $this->belongsTo(User::class, 'user_create_id');
     }
     
     public function conductor(){
