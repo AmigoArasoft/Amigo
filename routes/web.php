@@ -158,13 +158,13 @@ Route::prefix('mina')->group(function () {
 					Route::get('listarContacto/{id}', [OperadorController::class, 'listContact'])->name('operador.listarContacto');
 					Route::get('listarMaterial/{id}', [OperadorController::class, 'listMaterial'])->name('operador.listarMaterial');
 					Route::get('listarTransporte/{id}', [OperadorController::class, 'listTransport'])->name('operador.listarTransporte');
+					Route::post('crearContacto/{id}', [OperadorController::class, 'storeContact'])->name('operador.crearContacto');
+					Route::post('crearTransporte/{id}', [OperadorController::class, 'storeTransport'])->name('operador.crearTransporte');
 				});
 				Route::middleware(['permission:Operador crear'])->group(function () {
 					Route::get('crear', [OperadorController::class, 'create'])->name('operador.crear');
 					Route::post('crear', [OperadorController::class, 'store']);
-					Route::post('crearContacto/{id}', [OperadorController::class, 'storeContact'])->name('operador.crearContacto');
 					Route::post('crearMaterial/{id}', [OperadorController::class, 'storeMaterial'])->name('operador.crearMaterial');
-					Route::post('crearTransporte/{id}', [OperadorController::class, 'storeTransport'])->name('operador.crearTransporte');
 				});
 				Route::middleware(['permission:Operador editar'])->group(function () {
 					Route::get('editar/{id}', [OperadorController::class, 'edit'])->name('operador.editar');
