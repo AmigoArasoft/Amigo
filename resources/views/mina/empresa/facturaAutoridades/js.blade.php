@@ -22,7 +22,7 @@
                 }
             },
             "columns": [
-                @canany(['Factura editar', 'Factura borrar'])
+                @canany(['Factura editar', 'Factura borrar', 'Factura leer'])
                     {data: 'botones', class: 'text-center', orderable: false},
                 @endcanany
                 {data: 'id', name: 'facturas.id'},
@@ -31,6 +31,7 @@
                 {data: 'desde', name: 'facturas.fecha_desde'},
                 {data: 'hasta', name: 'facturas.fecha_hasta'},
                 {data: 'valor', name: 'facturas.valor', className:'text-right', render: $.fn.dataTable.render.number('.', ',', 0, '$ ')},
+                {data: 'metros', name: 'facturas.metros', className:'text-right', render: $.fn.dataTable.render.number('.', ',', 2, '')},
                 {data: 'activo', class: 'text-center', orderable: false},
             ],
             "language": {
