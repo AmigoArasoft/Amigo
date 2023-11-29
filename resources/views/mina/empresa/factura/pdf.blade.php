@@ -95,6 +95,19 @@
 					</td>
 				</tr>
 			@endforeach
+			<tr>
+				<td style="border: 2px solid #000;font-weight:bold;font-size:14px !important;">
+					TOTAL
+				</td>
+				<td class="left-position">
+					<b>{{ $factura->materiales->sum('volumen') }}</b>
+				</td>
+				<td>
+				</td>
+				<td class="left-position">
+					<b>$ {{ number_format($factura->materiales->sum('total'), 0, ',', '.') }}</b>
+				</td>
+			</tr>
 	    </tbody>
 	</table>
 	<div class="centro">

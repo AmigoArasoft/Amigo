@@ -191,7 +191,7 @@ class FacturaController extends Controller{
         
     }
 
-    public function excel($id){
+    public function excel(Request $request, $id){
         return Excel::download(new FacturaExport($id), 'Factura_'.$id.'.xlsx');
     }
 
