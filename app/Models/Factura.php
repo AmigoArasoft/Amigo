@@ -12,16 +12,54 @@ class Factura extends Model{
 	protected static function boot(){
         parent::boot();
         static::creating(function ($tabla) {
+            $fecha = Carbon::parse($tabla->fecha);
+            $fechaDesde = Carbon::parse($tabla->desde);
+            $fechaHasta = Carbon::parse($tabla->hasta);
+            $fecha->locale('es');
+            $fechaDesde->locale('es');
+            $fechaHasta->locale('es');
+            $dia = $fecha->isoFormat('D'); 
+            $mes = $fecha->isoFormat('MMMM'); 
+            $año = $fecha->isoFormat('Y'); 
+            $diaDesde = $fechaDesde->isoFormat('D'); 
+            $mesDesde = $fechaDesde->isoFormat('MMMM'); 
+            $añoDesde = $fechaDesde->isoFormat('Y');
+            $diaHasta = $fechaHasta->isoFormat('D'); 
+            $mesHasta = $fechaHasta->isoFormat('MMMM'); 
+            $añoHasta = $fechaHasta->isoFormat('Y');  
+            $output = "{$dia} de {$mes} de {$año}";
+            $outputDesde = "{$diaDesde} de {$mesDesde} de {$añoDesde}";
+            $outputHasta = "{$diaHasta} de {$mesHasta} de {$añoHasta}";
+            
             $tabla->user_create_id = $tabla->user_update_id = (Auth::check()) ? Auth::id() : 1;
-            $tabla->fecha_nombre = Carbon::parse($tabla->fecha)->formatLocalized('%d de %B de %Y');
-            $tabla->desde_nombre = Carbon::parse($tabla->desde)->formatLocalized('%d de %B de %Y');
-            $tabla->hasta_nombre = Carbon::parse($tabla->hasta)->formatLocalized('%d de %B de %Y');
+            $tabla->fecha_nombre = $output;
+            $tabla->desde_nombre = $outputDesde;
+            $tabla->hasta_nombre = $outputHasta;
         });
         static::updating(function ($tabla) {
+            $fecha = Carbon::parse($tabla->fecha);
+            $fechaDesde = Carbon::parse($tabla->desde);
+            $fechaHasta = Carbon::parse($tabla->hasta);
+            $fecha->locale('es');
+            $fechaDesde->locale('es');
+            $fechaHasta->locale('es');
+            $dia = $fecha->isoFormat('D'); 
+            $mes = $fecha->isoFormat('MMMM'); 
+            $año = $fecha->isoFormat('Y'); 
+            $diaDesde = $fechaDesde->isoFormat('D'); 
+            $mesDesde = $fechaDesde->isoFormat('MMMM'); 
+            $añoDesde = $fechaDesde->isoFormat('Y');
+            $diaHasta = $fechaHasta->isoFormat('D'); 
+            $mesHasta = $fechaHasta->isoFormat('MMMM'); 
+            $añoHasta = $fechaHasta->isoFormat('Y');  
+            $output = "{$dia} de {$mes} de {$año}";
+            $outputDesde = "{$diaDesde} de {$mesDesde} de {$añoDesde}";
+            $outputHasta = "{$diaHasta} de {$mesHasta} de {$añoHasta}";
+
             $tabla->user_update_id = (Auth::check()) ? Auth::id() : 1;
-            $tabla->fecha_nombre = Carbon::parse($tabla->fecha)->formatLocalized('%d de %B de %Y');
-            $tabla->desde_nombre = Carbon::parse($tabla->desde)->formatLocalized('%d de %B de %Y');
-            $tabla->hasta_nombre = Carbon::parse($tabla->hasta)->formatLocalized('%d de %B de %Y');
+            $tabla->fecha_nombre = $output;
+            $tabla->desde_nombre = $outputDesde;
+            $tabla->hasta_nombre = $outputHasta;
         });
     }
 

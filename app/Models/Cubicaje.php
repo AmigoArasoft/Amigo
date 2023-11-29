@@ -17,15 +17,27 @@ class Cubicaje extends Model{
     protected static function boot(){
         parent::boot();
         static::creating(function ($tabla) {
+            $fecha = Carbon::parse($tabla->fecha);
+            $fecha->locale('es');
+            $dia = $fecha->isoFormat('D'); 
+            $mes = $fecha->isoFormat('MMMM'); 
+            $año = $fecha->isoFormat('Y'); 
+            $output = "{$dia} de {$mes} de {$año}";
             $tabla->user_create_id = $tabla->user_update_id = (Auth::check()) ? Auth::id() : 1;
-            $tabla->fecha_nombre = Carbon::parse($tabla->fecha)->formatLocalized('%d de %B de %Y');
+            $tabla->fecha_nombre = $output;
             $tabla->volumen = ($tabla->volumen_ancho * $tabla->volumen_largo * $tabla->volumen_alto)
                 - ((($tabla->gato_mayor + $tabla->gato_menor)/2) * $tabla->gato_alto * $tabla->gato_ancho)
                 - ((($tabla->borde_base * $tabla->borde_alto)/2) * $tabla->borde_largo * 2);
         });
         static::updating(function ($tabla) {
+            $fecha = Carbon::parse($tabla->fecha);
+            $fecha->locale('es');
+            $dia = $fecha->isoFormat('D'); 
+            $mes = $fecha->isoFormat('MMMM'); 
+            $año = $fecha->isoFormat('Y'); 
+            $output = "{$dia} de {$mes} de {$año}";
             $tabla->user_update_id = (Auth::check()) ? Auth::id() : 1;
-            $tabla->fecha_nombre = Carbon::parse($tabla->fecha)->formatLocalized('%d de %B de %Y');
+            $tabla->fecha_nombre = $output;
             $tabla->volumen = ($tabla->volumen_ancho * $tabla->volumen_largo * $tabla->volumen_alto)
                 - ((($tabla->gato_mayor + $tabla->gato_menor)/2) * $tabla->gato_alto * $tabla->gato_ancho)
                 - ((($tabla->borde_base * $tabla->borde_alto)/2) * $tabla->borde_largo * 2);

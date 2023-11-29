@@ -16,7 +16,13 @@ class Transporte extends Model{
     protected static function boot(){
         parent::boot();
         static::creating(function ($tabla) {
-            $tabla->fecha_nombre = Carbon::parse($tabla->fecha)->formatLocalized('%d de %B de %Y');
+            $fecha = Carbon::parse($tabla->fecha);
+            $fecha->locale('es');
+            $dia = $fecha->isoFormat('D'); 
+            $mes = $fecha->isoFormat('MMMM'); 
+            $año = $fecha->isoFormat('Y'); 
+            $output = "{$dia} de {$mes} de {$año}";
+            $tabla->fecha_nombre = $output;
         });
     }
 

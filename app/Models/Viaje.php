@@ -11,14 +11,30 @@ class Viaje extends Model{
 
     protected static function boot(){
         parent::boot();
+        
         static::creating(function ($tabla) {
+            
+            $fecha = Carbon::parse($tabla->fecha);
+            $fecha->locale('es');
+            $dia = $fecha->isoFormat('D'); 
+            $mes = $fecha->isoFormat('MMMM'); 
+            $año = $fecha->isoFormat('Y'); 
+            $output = "{$dia} de {$mes} de {$año}";
+
             $tabla->user_create_id = $tabla->user_update_id = (Auth::check()) ? Auth::id() : 1;
-            $tabla->fecha_nombre = Carbon::parse($tabla->fecha)->formatLocalized('%d de %B de %Y');
+            $tabla->fecha_nombre = $output;
             $tabla->total = $tabla->volumen * $tabla->valor;
         });
         static::updating(function ($tabla) {
+            $fecha = Carbon::parse($tabla->fecha);
+            $fecha->locale('es');
+            $dia = $fecha->isoFormat('Do'); 
+            $mes = $fecha->isoFormat('MMMM'); 
+            $año = $fecha->isoFormat('Y'); 
+            $output = "{$dia} de {$mes} de {$año}";
+
             $tabla->user_update_id = (Auth::check()) ? Auth::id() : 1;
-            $tabla->fecha_nombre = Carbon::parse($tabla->fecha)->formatLocalized('%d de %B de %Y');
+            $tabla->fecha_nombre = $output;
             $tabla->total = $tabla->volumen * $tabla->valor;
         });
     }
