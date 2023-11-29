@@ -57,6 +57,9 @@ class InformeAutoridadesController extends Controller{
                 ->whereIn('facturas.id', $facturaArray)
             )
             ->addColumn('botones', 'mina/empresa/facturaAutoridades/tablaBoton')
+            ->addColumn('metros', function (Factura $factura) {
+                return $factura->viajes->sum('volumen');
+            })
             ->addColumn('activo', 'mina/empresa/facturaAutoridades/tablaActivo')
             ->rawColumns(['botones', 'activo'])
             ->toJson();

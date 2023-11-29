@@ -12,6 +12,7 @@ use App\Exports\FacturaExport;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,6 +27,7 @@ class FacturaController extends Controller{
 
     public function list(Request $request){
         if (!$request->ajax()) return redirect('/');
+
         return datatables()
             ->eloquent(Factura::select('facturas.id', 'terceros.nombre as operador', 'facturas.fecha_nombre as fecha', 'facturas.desde_nombre as desde', 'facturas.hasta_nombre as hasta', 'facturas.valor', 'facturas.activo')
                 ->when(Auth::user()->tercero_id != 1, function($q){
@@ -33,6 +35,9 @@ class FacturaController extends Controller{
                 })
                 ->join('terceros', 'facturas.tercero_id', '=', 'terceros.id'))
             ->addColumn('botones', 'mina/empresa/factura/tablaBoton')
+            ->addColumn('metros', function (Factura $factura) {
+                return $factura->viajes->sum('volumen');
+            })
             ->addColumn('activo', 'mina/empresa/factura/tablaActivo')
             ->rawColumns(['botones', 'activo'])
             ->toJson();
