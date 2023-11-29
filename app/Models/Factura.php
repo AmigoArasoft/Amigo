@@ -29,6 +29,10 @@ class Factura extends Model{
         return $this->hasMany(Viaje::class);
     }
 
+    public function tercero(){
+        return $this->belongsTo(Tercero::class, 'tercero_id', 'id');
+    }
+
     public function materiales(){
         return $this->viajes()
             ->selectRaw('material_id, materias.nombre, avg(valor) as valor, sum(volumen) as volumen, sum(total) as total')

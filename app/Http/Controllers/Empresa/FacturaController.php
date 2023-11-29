@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Empresa;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Models\Viaje;
 
 use App\Models\Factura;
 use App\Models\Tercero;
-use App\Models\Viaje;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
-use Barryvdh\DomPDF\Facade as PDF;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\Request;
 use App\Exports\FacturaExport;
+use Barryvdh\DomPDF\Facade as PDF;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
 
 class FacturaController extends Controller{
     public function __construct(){
@@ -176,19 +176,22 @@ class FacturaController extends Controller{
     }
 
     public function pdf(Request $request, $id){
-        $viajes = Viaje::select('viajes.fecha', 'vehiculos.placa', 'materias.nombre as material', 'gruposubmats.nombre as submaterial', 'viajes.volumen')
-            ->join('vehiculos', 'viajes.vehiculo_id', '=', 'vehiculos.id')
+        $factura = Factura::find($id);
+        $viajes = Viaje::join('vehiculos', 'viajes.vehiculo_id', '=', 'vehiculos.id')
             ->join('materias', 'viajes.material_id', '=', 'materias.id')
             ->join('gruposubmats', 'viajes.subgrupo_id', '=', 'gruposubmats.id')
             ->where('factura_id', $id)
             ->where('eliminado', 0)
-            ->where('viajes.activo', 1)->get();
-        $pdf = PDF::loadView('mina.empresa.factura.pdf', compact('viajes'));
-        return $pdf->download('Factura_'.$id.'.pdf');
+            ->where('viajes.activo', 1)
+            ->get();
+
+        $pdf = PDF::loadView('mina.empresa.factura.pdf', compact('viajes', 'factura'));
+        return $pdf->stream('factura_pdf_'.$id.'.pdf');
+        // return $pdf->download('Factura_'.$id.'.pdf'); //IMPORTANTE
         
     }
 
-    public function excel(Request $request, $id){
+    public function excel($id){
         return Excel::download(new FacturaExport($id), 'Factura_'.$id.'.xlsx');
     }
 
