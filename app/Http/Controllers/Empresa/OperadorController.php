@@ -115,7 +115,7 @@ class OperadorController extends Controller{
         $material = Tarifa::where('activo', 1)->orderBy('nombre')->pluck('nombre', 'id');
         $frente = Grupo::findOrFail(5)->parametros()->orderBy('nombre')->pluck('nombre', 'id');
         $terceros = Tercero::where('persona_id', 1)->where('id', '!=', $id)->pluck('nombre', 'id');
-        $transportes = Tercero::where('persona_id', 2)->where('transporte', 1)->pluck('nombre', 'id');
+        $transportes = Tercero::where('transporte', 1)->pluck('nombre', 'id');
         $comprador = Grupo::findOrFail(8)->parametros()->orderBy('nombre')->pluck('nombre', 'id');
         $user_tipo_usuario = User::findOrFail(Auth::user()->id)->role()->select('role_id')->first()->role_id;
         return view('mina.empresa.operador.index', ['accion' => 'Editar'], compact('tab', 'dato', 'terceros', 'funcion', 'material', 'frente', 'transportes', 'comprador', 'user_tipo_usuario'));

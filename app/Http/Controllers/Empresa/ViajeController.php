@@ -37,7 +37,6 @@ class ViajeController extends Controller{
         return datatables()
             ->eloquent(Viaje::select('viajes.nro_viaje', 'viajes.id', 'viajes.fecha_nombre as fecha', 'terceros.nombre as operador', 'vehiculos.placa', 'materias.nombre', 'viajes.volumen', 'users.name as digitador', 'viajes.activo')
                 ->where('eliminado', 0)
-                ->whereNull('factura_id')
                 ->when(Auth::user()->tercero_id != 1, function($q){
                     return $q->where('operador_id', Auth::user()->tercero_id);
                 })
@@ -199,7 +198,7 @@ class ViajeController extends Controller{
         $tarifa = TerceroTarifa::select('tarifa')
         ->where('tercero_id', $request->operador_id)
         ->join('tarifa_material', 'tarifa_material.tarifa_id', '=', 'tercero_tarifa.tarifa_id')
-        ->where('tarifa_material.material_id', $request->subgrupo_id)
+        ->where('tarifa_material.material_id', $request->material_id)
         ->first();
 
         if(!$tarifa){
