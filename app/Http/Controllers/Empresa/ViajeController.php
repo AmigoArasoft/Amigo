@@ -54,7 +54,7 @@ class ViajeController extends Controller{
         if (!$request->ajax()) return redirect('/');
         $operadorUno = Tercero::where('id', $id)->first();
         return datatables()
-            ->eloquent(Viaje::select('viajes.id', 'viajes.fecha_nombre as fecha', 'terceros.nombre as operador', 'vehiculos.placa', 'materias.nombre', 'viajes.volumen', 'viajes.valor', 'viajes.total')
+            ->eloquent(Viaje::select('viajes.id', 'viajes.fecha_nombre as fecha', 'terceros.nombre as operador', 'vehiculos.placa', 'materias.nombre', 'viajes.volumen', 'viajes.valor', 'viajes.total', 'viajes.nro_viaje')
                 ->when($operadorUno->operador == 1, function($q) use ($id) {
                     return $q->where('operador_id', $id);
                 })
@@ -63,6 +63,7 @@ class ViajeController extends Controller{
                 })
                 ->whereBetween('fecha', [$desde, $hasta])
                 ->where('eliminado', 0)
+                ->where('viajes.activo', 1)
                 ->whereNull('factura_id')
                 ->join('terceros', 'viajes.operador_id', '=', 'terceros.id')
                 ->join('vehiculos', 'viajes.vehiculo_id', '=', 'vehiculos.id')
@@ -73,7 +74,7 @@ class ViajeController extends Controller{
     public function listInvoice(Request $request, $id){
         if (!$request->ajax()) return redirect('/');
         return datatables()
-            ->eloquent(Viaje::select('viajes.id', 'viajes.fecha_nombre as fecha', 'terceros.nombre as operador', 'vehiculos.placa', 'materias.nombre', 'viajes.volumen', 'viajes.valor', 'viajes.total')
+            ->eloquent(Viaje::select('viajes.id', 'viajes.fecha_nombre as fecha', 'terceros.nombre as operador', 'vehiculos.placa', 'materias.nombre', 'viajes.volumen', 'viajes.valor', 'viajes.total', 'viajes.nro_viaje')
                 ->where('factura_id', $id)
                 ->join('terceros', 'viajes.operador_id', '=', 'terceros.id')
                 ->join('vehiculos', 'viajes.vehiculo_id', '=', 'vehiculos.id')

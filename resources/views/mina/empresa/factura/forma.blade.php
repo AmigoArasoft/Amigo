@@ -41,6 +41,7 @@
                         <th>Vehículo</th>
                         <th>Material</th>
                         <th>Volúmen</th>
+                        <th>Nro Vale</th>
                         <th>Valor</th>
                         <th>Total</th>
                     </tr>

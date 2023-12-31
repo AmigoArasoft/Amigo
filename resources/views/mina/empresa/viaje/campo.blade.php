@@ -2,7 +2,7 @@
 	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('fecha', 'Fecha:') }}
-			{{ Form::date('fecha', (!isset($dato)) ? $hoy : null, ['class' => $errors->first('fecha') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'min' => $desde, 'max' => $hoy, 'autofocus']) }}
+			{{ Form::date('fecha', (!isset($dato)) ? $hoy : null, ['class' => $errors->first('fecha') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'autofocus']) }}
 			@if($errors->has('fecha'))
 				<div class="invalid-feedback d-block">
 		        	{{ $errors->first('fecha') }}

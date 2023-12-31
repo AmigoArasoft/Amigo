@@ -120,7 +120,8 @@
 	        <tr>
 	            <th>Fecha</th>
 	            <th>Placa</th>
-	            <th>Subgrupo</th>
+	            <th>ID Viaje</th>
+	            <th>Nro Vale</th>
 	            <th>Material</th>
 	            <th>Volumen</th>
 	        </tr>
@@ -130,7 +131,8 @@
 	    		<tr>
 	    			<td>{{ $e->fecha }}</td>
 	    			<td>{{ $e->placa }}</td>
-	    			<td>{{ $e->subgrupo->nombre }}</td>
+	    			<td>{{ $e->id }}</td>
+	    			<td>{{ $e->nro_viaje ?? "" }}</td>
 	    			<td>{{ $e->material->nombre }}</td>
 	    			<td>{{ $e->volumen }}</td>
 	    		</tr>

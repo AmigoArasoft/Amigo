@@ -86,7 +86,8 @@
 	        <tr>
 	            <th style="border: 2px solid #000;text-align:center;font-weight:bold;font-size:14px !important;">Fecha</th>
 	            <th style="border: 2px solid #000;text-align:center;font-weight:bold;font-size:14px !important;">Placa</th>
-	            <th style="border: 2px solid #000;text-align:center;font-weight:bold;font-size:14px !important;">Subgrupo</th>
+	            <th style="border: 2px solid #000;text-align:center;font-weight:bold;font-size:14px !important;">Id Viaje</th>
+	            <th style="border: 2px solid #000;text-align:center;font-weight:bold;font-size:14px !important;">Nro Vale</th>
 	            <th style="border: 2px solid #000;text-align:center;font-weight:bold;font-size:14px !important;">Material</th>
 	            <th style="border: 2px solid #000;text-align:center;font-weight:bold;font-size:14px !important;">Volumen</th>
 	        </tr>
@@ -96,7 +97,8 @@
 	    		<tr>
 	    			<td style="border: 1px solid #000;font-size:12px !important;">{{ $e->fecha }}</td>
 	    			<td style="border: 1px solid #000;font-size:12px !important;">{{ $e->placa }}</td>
-	    			<td style="border: 1px solid #000;font-size:12px !important;">{{ $e->subgrupo->nombre }}</td>
+	    			<td style="border: 1px solid #000;font-size:12px !important;">{{ $e->id }}</td>
+	    			<td style="border: 1px solid #000;font-size:12px !important;">{{ $e->nro_viaje ?? "" }}</td>
 	    			<td style="border: 1px solid #000;font-size:12px !important;">{{ $e->material->nombre }}</td>
 	    			<td style="border: 1px solid #000;font-size:12px !important;">{{ $e->volumen }}</td>
 	    		</tr>

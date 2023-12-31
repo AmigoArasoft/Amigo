@@ -60,6 +60,7 @@ class FacturaController extends Controller{
                 })
                 ->whereBetween('fecha', [$desde, $hasta])
                 ->where('eliminado', 0)
+                ->where('viajes.activo', 1)
                 ->whereNull('factura_id')
                 ->groupBy('material_id', 'materias.nombre')
                 ->join('materias', 'viajes.material_id', '=', 'materias.id')
@@ -126,6 +127,7 @@ class FacturaController extends Controller{
                 })
                 ->whereBetween('fecha', [$desde, $hasta])
                 ->where('eliminado', 0)
+                ->where('viajes.activo', 1)
                 ->whereNull('factura_id')
                 ->groupBy('material_id', 'materias.nombre')
                 ->join('materias', 'viajes.material_id', '=', 'materias.id')
@@ -191,8 +193,7 @@ class FacturaController extends Controller{
             ->get();
 
         $pdf = PDF::loadView('mina.empresa.factura.pdf', compact('viajes', 'factura'));
-        return $pdf->stream('factura_pdf_'.$id.'.pdf');
-        // return $pdf->download('Factura_'.$id.'.pdf'); //IMPORTANTE
+        return $pdf->download('factura_pdf_'.$id.'.pdf');
         
     }
 

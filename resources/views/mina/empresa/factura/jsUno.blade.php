@@ -15,6 +15,7 @@ $(document).ready(function() {
             {data: 'placa', name: 'vehiculos.placa'},
             {data: 'nombre', name: 'materias.nombre'},
             {data: 'volumen', name: 'viajes.volumen', className:'text-right', render: $.fn.dataTable.render.number('.', ',', 2, '')},
+            {data: 'nro_viaje', name: 'viajes.nro_viaje', className:'text-right'},
             {data: 'valor', name: 'viajes.valor', className:'text-right', render: $.fn.dataTable.render.number('.', ',', 0, '$ ')},
             {data: 'total', name: 'viajes.total', className:'text-right', render: $.fn.dataTable.render.number('.', ',', 2, '$ ')},
         ],
