@@ -133,7 +133,7 @@
 	    			<td>{{ $e->placa }}</td>
 	    			<td>{{ $e->id }}</td>
 	    			<td>{{ $e->nro_viaje ?? "" }}</td>
-	    			<td>{{ $e->material->nombre }}</td>
+	    			<td>{{ $e->nombre }}</td>
 	    			<td>{{ $e->volumen }}</td>
 	    		</tr>
 	    	@endforeach

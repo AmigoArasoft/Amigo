@@ -31,6 +31,9 @@ var materiales = @json($materiales);
         ];
     @endforeach
 @endforeach
+
+getVehicleCubage(document.forma.vehiculo_id.value);
+
 function cambiaOperador(valor){
     if (valor !== '') {
         mi_valor = eval("mate_" + valor);
@@ -79,8 +82,9 @@ function cambiaMaterial(valor){
 function cambiaVehiculo(valor){
     if (valor !== '') {
         x_valor = eval("v_" + valor);
-        document.forma.volumen.value = x_valor[0][1];
-        document.forma.volumen.max = x_valor[0][1];
+
+        getVehicleCubage(valor);
+
         mi_valor = eval("tran_" + x_valor[0][0]);
         num_valor = mi_valor.length;
         document.forma.conductor_id.length = num_valor;
@@ -97,5 +101,31 @@ function cambiaVehiculo(valor){
         document.forma.conductor_id.options[0].value = "";
         document.forma.conductor_id.options[0].text = "";
     }
+}
+
+function getVehicleCubage(valor){
+    x_valor = eval("v_" + valor);
+
+    $.ajax({
+        type: "GET",
+        url: "{{ route('viaje.getVehicleCubage') }}",
+        data: {
+            id_vehiculo: valor
+        },
+        success: function (response) {
+            document.forma.volumen.disabled = false;
+            document.forma.volumen.max = x_valor[0][1];
+            document.forma.volumen.value = x_valor[0][1];
+
+            if(response.data){
+                document.forma.volumen.value = response.data.volumen;
+                document.forma.volumen.disabled = true;
+            }
+        }
+    });
+}
+
+function formSubmit(){
+    document.forma.volumen.disabled = false;
 }
 </script>

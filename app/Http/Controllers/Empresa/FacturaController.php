@@ -51,20 +51,23 @@ class FacturaController extends Controller{
         $desde = ($request->desde) ? $request->desde : Carbon::now()->firstOfMonth()->toDateString();
         $hasta = ($request->hasta) ? $request->hasta : Carbon::now()->toDateString();
         $operadorUno = Tercero::where('id', $ope)->first();
-        $viajes = Viaje::selectRaw('material_id, materias.nombre, count(valor) as cuenta, avg(valor) as valor, sum(volumen) as volumen, sum(total) as total')
-                ->when($operadorUno->operador == 1, function($q) use ($ope) {
-                    return $q->where('operador_id', $ope);
-                })
-                ->when($operadorUno->transporte == 1 && $operadorUno->operador == 0, function($q) use ($ope) {
-                    return $q->where('transporte_id', $ope);
-                })
-                ->whereBetween('fecha', [$desde, $hasta])
-                ->where('eliminado', 0)
-                ->where('viajes.activo', 1)
-                ->whereNull('factura_id')
-                ->groupBy('material_id', 'materias.nombre')
-                ->join('materias', 'viajes.material_id', '=', 'materias.id')
-                ->get();
+        $viajes = Viaje::selectRaw('viajes.material_id, materias.nombre, count(valor) as cuenta, sum(tercero_tarifa.tarifa) as valor, sum(volumen) as volumen, sum(total) as total')
+        ->when($operadorUno->operador == 1, function($q) use ($ope) {
+            return $q->where('operador_id', $ope);
+        })
+        ->when($operadorUno->transporte == 1 && $operadorUno->operador == 0, function($q) use ($ope) {
+            return $q->where('transporte_id', $ope);
+        })
+        ->whereBetween('fecha', [$desde, $hasta])
+        ->where('eliminado', 0)
+        ->where('tercero_tarifa.tercero_id', $ope)
+        ->where('viajes.activo', 1)
+        ->whereNull('factura_id')
+        ->groupBy('viajes.material_id', 'materias.nombre')
+        ->join('materias', 'viajes.material_id', '=', 'materias.id')
+        ->join('tarifa_material', 'tarifa_material.material_id', '=', 'materias.id')
+        ->join('tercero_tarifa', 'tercero_tarifa.tarifa_id', '=', 'tarifa_material.tarifa_id')
+        ->get();
         return view('mina.empresa.factura.index', ['accion' => 'Nuevo']
             , compact('operadores', 'operador', 'ope', 'fecha', 'desde', 'hasta', 'viajes')
         );
@@ -81,6 +84,8 @@ class FacturaController extends Controller{
             return $q->where('transporte_id', $request->tercero_id);
         })->whereBetween('fecha', [$request->desde, $request->hasta])
         ->whereNull('factura_id')
+        ->where('eliminado', 0)
+        ->where('activo', 1)
         ->get();
 
         if($viajes->count() > 0 && $viajes->sum('total')) {
@@ -101,6 +106,8 @@ class FacturaController extends Controller{
                 })
                 ->whereBetween('fecha', [$request->desde, $request->hasta])
                 ->whereNull('factura_id')
+                ->where('eliminado', 0)
+                ->where('activo', 1)
                 ->update(['factura_id' => $dato->id]);
         }
         return redirect()->route('factura')->with('info', 'Registro creado con éxito');
@@ -147,7 +154,10 @@ class FacturaController extends Controller{
             return $q->where('transporte_id', $request->tercero_id);
         })->whereBetween('fecha', [$request->desde, $request->hasta])
         ->whereNull('factura_id')
+        ->where('eliminado', 0)
+        ->where('activo', 1)
         ->get();
+        
         if($viajes->count() > 0 && $viajes->sum('total')) {
             $dato = Factura::findOrFail($id);
             $dato->fill([
@@ -167,6 +177,8 @@ class FacturaController extends Controller{
                 })
                 ->whereBetween('fecha', [$request->desde, $request->hasta])
                 ->whereNull('factura_id')
+                ->where('eliminado', 0)
+                ->where('activo', 1)
                 ->update(['factura_id' => $dato->id]);
         }
         return redirect()->route('factura')->with('info', 'Registro actualizado con éxito');
@@ -184,7 +196,8 @@ class FacturaController extends Controller{
 
     public function pdf(Request $request, $id){
         $factura = Factura::find($id);
-        $viajes = Viaje::join('vehiculos', 'viajes.vehiculo_id', '=', 'vehiculos.id')
+        $viajes = Viaje::select('viajes.fecha', 'vehiculos.placa', 'viajes.id', 'viajes.nro_viaje', 'materias.nombre', 'viajes.volumen')
+            ->join('vehiculos', 'viajes.vehiculo_id', '=', 'vehiculos.id')
             ->join('materias', 'viajes.material_id', '=', 'materias.id')
             ->join('gruposubmats', 'viajes.subgrupo_id', '=', 'gruposubmats.id')
             ->where('factura_id', $id)

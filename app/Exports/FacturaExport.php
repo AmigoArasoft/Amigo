@@ -23,7 +23,8 @@ class FacturaExport implements FromView, WithBackgroundColor, WithStyles, WithEv
     public function view(): View
     {
 
-        $viajes = Viaje::join('vehiculos', 'viajes.vehiculo_id', '=', 'vehiculos.id')
+        $viajes = Viaje::select('viajes.fecha', 'vehiculos.placa', 'viajes.id', 'viajes.nro_viaje', 'materias.nombre', 'viajes.volumen', 'viajes.total')
+        ->join('vehiculos', 'viajes.vehiculo_id', '=', 'vehiculos.id')
         ->join('materias', 'viajes.material_id', '=', 'materias.id')
         ->join('gruposubmats', 'viajes.subgrupo_id', '=', 'gruposubmats.id')
         ->where('factura_id', $this->id)

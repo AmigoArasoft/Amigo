@@ -103,6 +103,7 @@ Route::prefix('mina')->group(function () {
 		Route::middleware(['permission:Viaje crear', 'mina'])->group(function () {
 			Route::get('crear', [ViajeController::class, 'create'])->name('viaje.crear');
 			Route::post('crear', [ViajeController::class, 'store']);
+			Route::get('vehiculoCubicaje', [ViajeController::class, 'getVehicleCubage'])->name('viaje.getVehicleCubage');
 		});
 		Route::middleware(['permission:Viaje editar', 'mina'])->group(function () {
 			Route::get('editar/{id}', [ViajeController::class, 'edit'])->name('viaje.editar');

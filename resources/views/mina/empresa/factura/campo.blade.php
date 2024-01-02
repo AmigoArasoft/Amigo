@@ -31,7 +31,7 @@
 			   			<div class="col-md-8">{{ number_format($e->volumen, 2, '.', ',') }}</div>
 			   		</div>
 			   		<div class="row">
-			   			<div class="col-md-4"><b>Valor: </b></div>
+			   			<div class="col-md-4"><b>Valor (actual): </b></div>
 			    		<div class="col-md-8">$ {{ number_format($e->valor, 2, '.', ',') }}</div>
 			    	</div>
 			    	<div class="row">

@@ -71,12 +71,12 @@
 					TOTAL
 				</td>
 				<td style="border: 2px solid #000;text-align:right;font-weight:bold;font-size:14px !important;">
-					{{ $factura->materiales->sum('volumen') }}
+					{{ $viajes->sum('volumen') }}
 				</td>
 				<td style="border: 2px solid #000;text-align:right;font-weight:bold;font-size:14px !important;">
 				</td>
 				<td style="border: 2px solid #000;text-align:right;font-weight:bold;font-size:14px !important;">
-					$ {{ number_format($factura->materiales->sum('total'), 0, ',', '.') }}
+					$ {{ number_format($viajes->sum('total'), 0, ',', '.') }}
 				</td>
 			</tr>
 	    </tbody>
@@ -99,7 +99,7 @@
 	    			<td style="border: 1px solid #000;font-size:12px !important;">{{ $e->placa }}</td>
 	    			<td style="border: 1px solid #000;font-size:12px !important;">{{ $e->id }}</td>
 	    			<td style="border: 1px solid #000;font-size:12px !important;">{{ $e->nro_viaje ?? "" }}</td>
-	    			<td style="border: 1px solid #000;font-size:12px !important;">{{ $e->material->nombre }}</td>
+	    			<td style="border: 1px solid #000;font-size:12px !important;">{{ $e->nombre }}</td>
 	    			<td style="border: 1px solid #000;font-size:12px !important;">{{ $e->volumen }}</td>
 	    		</tr>
 	    	@endforeach

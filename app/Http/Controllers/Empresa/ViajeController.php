@@ -16,6 +16,7 @@ use App\Models\Gruposubmat;
 use CreateGruposubmatsTable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Cubicaje;
 use Illuminate\Support\Facades\Auth;
 use App\Models\GrupoSubMateriaMaterial;
 use App\Models\Tarifa;
@@ -65,9 +66,9 @@ class ViajeController extends Controller{
                 ->where('eliminado', 0)
                 ->where('viajes.activo', 1)
                 ->whereNull('factura_id')
-                ->join('terceros', 'viajes.operador_id', '=', 'terceros.id')
-                ->join('vehiculos', 'viajes.vehiculo_id', '=', 'vehiculos.id')
-                ->join('materias', 'viajes.material_id', '=', 'materias.id'))
+                ->leftJoin('terceros', 'viajes.operador_id', '=', 'terceros.id')
+                ->leftJoin('vehiculos', 'viajes.vehiculo_id', '=', 'vehiculos.id')
+                ->leftJoin('materias', 'viajes.material_id', '=', 'materias.id'))
             ->toJson();
     }
 
@@ -252,6 +253,19 @@ class ViajeController extends Controller{
             return $pdf->stream('certificado_vale_'.$request->id.'.pdf');
         }
         return view('mina.vale');
+    }
+
+    public function getVehicleCubage(Request $request){
+        if(!isset($request->id_vehiculo))
+            return response()->json([
+                "data" => []
+            ], 400);
+
+        $getVehicle = Cubicaje::select('volumen')->where('vehiculo_id', $request->id_vehiculo)->where('activo', 1)->first();
+
+        return response()->json([
+            "data" => $getVehicle
+        ], 200);
     }
 
     protected function validator(array $data){
