@@ -195,6 +195,8 @@ class FacturaController extends Controller{
     }
 
     public function pdf(Request $request, $id){
+        ini_set('memory_limit', -1);
+
         $factura = Factura::find($id);
         $viajes = Viaje::select('viajes.fecha', 'vehiculos.placa', 'viajes.id', 'viajes.nro_viaje', 'materias.nombre', 'viajes.volumen')
             ->join('vehiculos', 'viajes.vehiculo_id', '=', 'vehiculos.id')
@@ -206,7 +208,7 @@ class FacturaController extends Controller{
             ->get();
 
         $pdf = PDF::loadView('mina.empresa.factura.pdf', compact('viajes', 'factura'));
-        return $pdf->download('factura_pdf_'.$id.'.pdf');
+        return $pdf->stream();
         
     }
 

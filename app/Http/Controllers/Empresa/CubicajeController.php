@@ -79,9 +79,11 @@ class CubicajeController extends Controller{
     }
 
     public function pdf(Request $request, $id){
+        ini_set('memory_limit', -1);
+        
         $cubicaje = Cubicaje::find($id);
         $pdf = PDF::loadView('mina.empresa.cubicaje.pdf', compact('cubicaje'))->setPaper('letter', 'portrait');
-        return $pdf->download('Cubicaje_'.$id.'.pdf');
+        return $pdf->stream();
     }
 
     protected function validator(array $data){
