@@ -7,6 +7,11 @@
         @endforeach
     ];
 @endforeach
+
+function refreshSelectpicker(){
+    $(".selectpicker").selectpicker("refresh");
+}
+
 function cambiaTransportador(valor){
     if (valor !== '') {
         mi_valor = eval("tran_" + valor);
@@ -22,5 +27,6 @@ function cambiaTransportador(valor){
         document.forma.conductor_id.options[0].text = "Seleccione...";
     }
     document.forma.conductor_id.options[0].selected = true;
+    refreshSelectpicker();
 }
 </script>

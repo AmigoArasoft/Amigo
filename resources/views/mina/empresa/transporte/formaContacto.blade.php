@@ -4,7 +4,7 @@
             <div class="form-group row">
                 {{ Form::label('contacto_id', 'Persona natural:', ['class' => 'col-md-4']) }}
                 <div class="col-md-8">
-                    {{ Form::select('contacto_id', $terceros, (!isset($dato)) ? 1 : null, ['class' => $errors->first('contacto_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'required', 'autofocus']) }}    
+                    {{ Form::select('contacto_id', $terceros, (!isset($dato)) ? 1 : null, ['class' => $errors->first('contacto_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true', 'required', 'autofocus']) }}    
                 </div>
                 @if($errors->has('contacto_id'))
                     <div class="invalid-feedback d-block">
@@ -17,7 +17,7 @@
             <div class="form-group row">
                 {{ Form::label('funcion_id', 'Función:', ['class' => 'col-md-4']) }}
                 <div class="col-md-8">
-                    {{ Form::select('funcion_id', $funcion, (!isset($dato)) ? 1 : null, ['class' => $errors->first('funcion_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'required']) }}    
+                    {{ Form::select('funcion_id', $funcion, (!isset($dato)) ? 1 : null, ['class' => $errors->first('funcion_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true', 'required']) }}    
                 </div>
                 @if($errors->has('funcion_id'))
                     <div class="invalid-feedback d-block">

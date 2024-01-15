@@ -2,7 +2,7 @@
 	<div class="col-md-4">
 		<div class="form-group">
 			{{ Form::label('tercero_id', 'Operador/Transportador:') }}
-			{{ Form::select('tercero_id', $operador, $ope, ['class' => $errors->first('tercero_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'onchange' => 'this.form.submit()', 'autofocus']) }}
+			{{ Form::select('tercero_id', $operador, $ope, ['class' => $errors->first('tercero_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true', 'onchange' => 'this.form.submit()', 'autofocus']) }}
 			@if($errors->has('tercero_id'))
 				<div class="invalid-feedback d-block">
 		        	{{ $errors->first('tercero_id') }}

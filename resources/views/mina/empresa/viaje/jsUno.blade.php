@@ -34,6 +34,11 @@ var materiales = @json($materiales);
 
 getVehicleCubage(document.forma.vehiculo_id.value);
 
+
+function refreshSelectpicker(){
+    $(".selectpicker").selectpicker("refresh");
+}
+
 function cambiaOperador(valor){
     if (valor !== '') {
         mi_valor = eval("mate_" + valor);
@@ -61,6 +66,7 @@ function cambiaOperador(valor){
     document.forma.material_id.options[0].selected = true;
     cambiaMaterial(document.getElementById('subgrupo_id').value);
     cambiaVehiculo(document.getElementById('vehiculo_id').value);
+    refreshSelectpicker();
 }
 function cambiaMaterial(valor){
     if (valor !== '') {
@@ -78,6 +84,7 @@ function cambiaMaterial(valor){
         document.forma.material_id.options[0].text = "";
     }
     document.forma.material_id.options[0].selected = true;
+    refreshSelectpicker();
 }
 function cambiaVehiculo(valor){
     if (valor !== '') {
@@ -101,6 +108,7 @@ function cambiaVehiculo(valor){
         document.forma.conductor_id.options[0].value = "";
         document.forma.conductor_id.options[0].text = "";
     }
+    refreshSelectpicker();
 }
 
 function getVehicleCubage(valor){

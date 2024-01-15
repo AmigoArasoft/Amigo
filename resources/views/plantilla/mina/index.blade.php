@@ -12,7 +12,9 @@
     <link href="{{ asset('css/dataTables.bootstrap4.css') }}" rel="stylesheet">
     <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/adminlte.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/garzon.css') }}">
     <livewire:styles />
 </head>
 <body class="@auth sidebar-mini @endauth layout-sidebar-fixed sidebar-collapse">
@@ -36,6 +38,12 @@
     <script src="{{ asset('js/toastr.min.js') }}"></script>
     <script src="{{ asset('js/bs-custom-file-input.min.js') }}"></script>
     <script src="{{ asset('js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+    <script>
+        $(function () {
+            $('.selectpicker').selectpicker();
+        });
+    </script>
     @include('plantilla.mina.mensaje')
     <livewire:scripts />
     @yield('codigo')

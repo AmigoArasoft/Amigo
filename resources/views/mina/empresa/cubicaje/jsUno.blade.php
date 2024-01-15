@@ -12,6 +12,11 @@
         var veh_{{ $m->id }}="{{ $m->tercero->nombre ?? null }}";
     @endforeach
 @endforeach
+
+function refreshSelectpicker(){
+    $(".selectpicker").selectpicker("refresh");
+}
+
 function cambiaOperador(valor){
     if (valor !== '') {
         document.forma.operador.value = eval("rep_" + valor);
@@ -30,6 +35,7 @@ function cambiaOperador(valor){
     }
     document.forma.vehiculo_id.options[0].selected = true;
     cambiaVehiculo(document.forma.vehiculo_id.value);
+    refreshSelectpicker();
 }
 function cambiaVehiculo(valor){
     if (valor !== '') {
@@ -37,6 +43,7 @@ function cambiaVehiculo(valor){
     }else{
         document.forma.transportador.value = "";
     }
+    refreshSelectpicker();
 }
 function cambiaVol(){
     document.forma.volumen_bruto.value =  document.forma.volumen_ancho.value * document.forma.volumen_largo.value * document.forma.volumen_alto.value;

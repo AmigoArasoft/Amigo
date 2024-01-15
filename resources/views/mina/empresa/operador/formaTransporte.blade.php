@@ -4,7 +4,7 @@
             <div class="form-group row">
                 {{ Form::label('transporte_id', 'Transportadora:', ['class' => 'col-md-4']) }}
                 <div class="col-md-8">
-                    {{ Form::select('transporte_id', $transportes, (!isset($dato)) ? 1 : null, ['class' => $errors->first('transporte_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'required', 'autofocus']) }}    
+                    {{ Form::select('transporte_id', $transportes, (!isset($dato)) ? 1 : null, ['class' => $errors->first('transporte_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true', 'required', 'autofocus']) }}    
                 </div>
                 @if($errors->has('transporte_id'))
                     <div class="invalid-feedback d-block">

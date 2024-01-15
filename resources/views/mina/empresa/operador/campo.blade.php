@@ -2,7 +2,7 @@
 	<div class="col-md-4">
 		<div class="form-group">
 			{{ Form::label('tercero_id', 'Persona jurídica/natural:') }}
-			{{ Form::select('tercero_id', $tercero, (!isset($dato)) ? 1 : null, ['class' => $errors->first('tercero_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'required', 'autofocus']) }}
+			{{ Form::select('tercero_id', $tercero, (!isset($dato)) ? 1 : null, ['class' => $errors->first('tercero_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm  selectpicker', 'data-live-search' => 'true', 'required', 'autofocus']) }}
 			@if($errors->has('tercero_id'))
 				<div class="invalid-feedback d-block">
 		        	{{ $errors->first('tercero_id') }}
@@ -13,7 +13,7 @@
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('frente_id', 'Frente:') }}
-			{{ Form::select('frente_id', $frente, (!isset($dato)) ? 1 : null, ['class' => $errors->first('frente_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'required']) }}
+			{{ Form::select('frente_id', $frente, (!isset($dato)) ? 1 : null, ['class' => $errors->first('frente_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm  selectpicker', 'data-live-search' => 'true', 'required']) }}
 			@if($errors->has('frente_id'))
 				<div class="invalid-feedback d-block">
 		        	{{ $errors->first('frente_id') }}
@@ -49,7 +49,7 @@
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('comprador_id', 'Comprador:') }}
-			{{ Form::select('comprador_id', $comprador, null, ['class' => $errors->first('comprador_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'required']) }}
+			{{ Form::select('comprador_id', $comprador, null, ['class' => $errors->first('comprador_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true', 'required']) }}
 			@if($errors->has('comprador_id'))
 				<div class="invalid-feedback d-block">
 		        	{{ $errors->first('comprador_id') }}

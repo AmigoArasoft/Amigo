@@ -13,7 +13,7 @@
 	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('tercero_id', 'Operador:') }}
-			{{ Form::select('tercero_id', $terceros, (!isset($dato)) ? 1 : null, ['class' => $errors->first('tercero_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'onChange' => 'cambiaOperador(this.value)']) }}
+			{{ Form::select('tercero_id', $terceros, (!isset($dato)) ? 1 : null, ['class' => $errors->first('tercero_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true', 'onChange' => 'cambiaOperador(this.value)']) }}
 			@if($errors->has('tercero_id'))
 				<div class="invalid-feedback d-block">
 		        	{{ $errors->first('tercero_id') }}
@@ -24,7 +24,7 @@
 	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('vehiculo_id', 'Vehículo:') }}
-			{{ Form::select('vehiculo_id', $vehiculos, (!isset($dato)) ? 1 : null, ['class' => $errors->first('vehiculo_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm', 'onChange' => 'cambiaVehiculo(this.value)']) }}
+			{{ Form::select('vehiculo_id', $vehiculos, (!isset($dato)) ? 1 : null, ['class' => $errors->first('vehiculo_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true', 'onChange' => 'cambiaVehiculo(this.value)']) }}
 			@if($errors->has('vehiculo_id'))
 				<div class="invalid-feedback d-block">
 		        	{{ $errors->first('vehiculo_id') }}
