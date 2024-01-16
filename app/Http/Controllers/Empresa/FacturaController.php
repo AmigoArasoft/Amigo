@@ -185,13 +185,13 @@ class FacturaController extends Controller{
     }
 
     public function destroy($id){
-        $dato = Factura::findOrFail($id);
-        $dato->valor =  0;
-        $dato->save();
         Viaje::select('id', 'fecha_nombre', 'volumen', 'valor', 'total')
-                ->where('factura_id', $id)
-                ->update(['factura_id' => null]);
-        return redirect()->route('factura')->with('info', 'Registro actualizado con éxito');
+        ->where('factura_id', $id)
+        ->update(['factura_id' => null]);
+
+        //Eliminamos la factura
+        Factura::findOrFail($id)->delete();
+        return redirect()->route('factura')->with('info', 'Registro eliminado con éxito');
     }
 
     public function pdf(Request $request, $id){
