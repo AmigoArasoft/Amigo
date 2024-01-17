@@ -34,24 +34,23 @@ var materiales = @json($materiales);
 
 getVehicleCubage(document.forma.vehiculo_id.value);
 
-
 function refreshSelectpicker(){
     $(".selectpicker").selectpicker("refresh");
 }
 
 @if($accion == 'Nuevo')
-    document.forma.material_id.length = 0;
-    document.forma.vehiculo_id.length = 0;
-    document.forma.conductor_id.length = 0;
+    document.forma.material_id.value = "";
+    document.forma.vehiculo_id.value = "";
+    document.forma.conductor_id.value = "";
+    document.forma.operador_id.value = "";
+    document.forma.subgrupo_id.value = "";
 @endif
-
 
 function cambiaOperador(valor){
     if (valor !== '') {
         mi_valor = eval("mate_" + valor);
         num_valor = mi_valor.length;
         document.forma.material_id.length = num_valor;
-        
         for(i=0;i<num_valor;i++){
             document.forma.material_id.options[i].value = mi_valor[i][0];
             document.forma.material_id.options[i].text = mi_valor[i][1];
@@ -143,6 +142,16 @@ function getVehicleCubage(valor){
 
 function formSubmit(e){
     e.preventDefault();
+
+    if(document.forma.operador_id.value == ""){
+        toastr.error('Operador no debe estar vacío')
+        return false;
+    }
+
+    if(document.forma.subgrupo_id.value == ""){
+        toastr.error('Sub Grupo no debe estar vacío')
+        return false;
+    }
 
     if(document.forma.material_id.value == ""){
         toastr.error('Material no debe estar vacío')

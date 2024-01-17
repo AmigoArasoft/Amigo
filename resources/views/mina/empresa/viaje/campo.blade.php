@@ -35,7 +35,7 @@
 	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('material_id', 'Material:') }}
-			{{ Form::select('material_id', $materiales, (!isset($dato)) ? 1 : null, ['class' => $errors->first('material_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true', 'title' => 'Seleccione material']) }}
+			{{ Form::select('material_id', $materiales, (!isset($dato)) ? 1 : null, ['class' => $errors->first('material_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true']) }}
 			@if($errors->has('material_id'))
 				<div class="invalid-feedback d-block">
 		        	{{ $errors->first('material_id') }}
@@ -59,7 +59,7 @@
 	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('vehiculo_id', 'Vehículo:') }}
-			{{ Form::select('vehiculo_id', $vehiculo, (!isset($dato)) ? 1 : null, ['class' => $errors->first('vehiculo_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true', 'onchange' => 'cambiaVehiculo(this.value)', 'title' => 'Seleccione vehículo']) }}
+			{{ Form::select('vehiculo_id', $vehiculo, (!isset($dato)) ? 1 : null, ['class' => $errors->first('vehiculo_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true', 'onchange' => 'cambiaVehiculo(this.value)']) }}
 			@if($errors->has('vehiculo_id'))
 				<div class="invalid-feedback d-block">
 		        	{{ $errors->first('vehiculo_id') }}
@@ -70,7 +70,7 @@
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ Form::label('conductor_id', 'Conductor:') }}
-			{{ Form::select('conductor_id', $conductor, (!isset($dato)) ? $vehi->conductor_id : null, ['class' => $errors->first('conductor_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true', 'title' => 'Seleccione conductor']) }}
+			{{ Form::select('conductor_id', $conductor, (!isset($dato)) ? $vehi->conductor_id : null, ['class' => $errors->first('conductor_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true']) }}
 			@if($errors->has('conductor_id'))
 				<div class="invalid-feedback d-block">
 		        	{{ $errors->first('conductor_id') }}
