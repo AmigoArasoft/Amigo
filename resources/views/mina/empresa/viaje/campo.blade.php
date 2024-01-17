@@ -69,11 +69,11 @@
 	</div>
 	<div class="col-md-3">
 		<div class="form-group">
-			{{ Form::label('conductor_id', 'Conductor:') }}
-			{{ Form::select('conductor_id', $conductor, (!isset($dato)) ? $vehi->conductor_id : null, ['class' => $errors->first('conductor_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true']) }}
-			@if($errors->has('conductor_id'))
+			{{ Form::label('conductor_nombre', 'Conductor:') }}
+			{{ Form::text('conductor_nombre', (!isset($dato)) ? $vehi->conductor_nombre : null, ['class' => $errors->first('conductor_nombre') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true']) }}
+			@if($errors->has('conductor_nombre'))
 				<div class="invalid-feedback d-block">
-		        	{{ $errors->first('conductor_id') }}
+		        	{{ $errors->first('conductor_nombre') }}
 		      	</div>
 		    @endif
 		</div>

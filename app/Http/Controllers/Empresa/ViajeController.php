@@ -151,7 +151,7 @@ class ViajeController extends Controller{
         Viaje::create([
             'fecha' => $request->fecha,
             'vehiculo_id' => $request->vehiculo_id,
-            'conductor_id' => $request->conductor_id,
+            'conductor_nombre' => $request->conductor_nombre,
             'operador_id' => $request->operador_id,
             'transporte_id' => $vehiculo->tercero_id,
             'material_id' => $request->material_id,
@@ -163,10 +163,6 @@ class ViajeController extends Controller{
             'cliente' => $request->cliente ?? NULL,
             'destino' => $request->destino ?? NULL
         ]);
-
-        $vehiculo->fill([
-            'conductor_id' => $request->conductor_id,
-        ])->save();
         return redirect()->route('viaje')->with('info', 'Registro creado con éxito');
     }
 
@@ -226,7 +222,7 @@ class ViajeController extends Controller{
         $dato->fill([
             'fecha' => $request->fecha,
             'vehiculo_id' => $request->vehiculo_id,
-            'conductor_id' => $request->conductor_id,
+            'conductor_nombre' => $request->conductor_nombre,
             'operador_id' => $request->operador_id,
             'transporte_id' => $vehiculo->tercero_id,
             'material_id' => $request->material_id,
@@ -238,9 +234,7 @@ class ViajeController extends Controller{
             'cliente' => $request->cliente ?? NULL,
             'destino' => $request->destino ?? NULL
         ])->save();
-        $vehiculo->fill([
-            'conductor_id' => $request->conductor_id,
-        ])->save();
+
         return redirect()->route('viaje')->with('info', 'Registro actualizado con éxito');
     }
 
@@ -288,7 +282,7 @@ class ViajeController extends Controller{
         return Validator::make($data, [
             'fecha' => 'required|date',
             'vehiculo_id' => 'required|exists:vehiculos,id',
-            'conductor_id' => 'nullable|exists:terceros,id',
+            'conductor_nombre' => 'nullable',
             'operador_id' => 'required|exists:terceros,id',
             'material_id' => 'required|exists:materias,id',
             'subgrupo_id' => 'required|exists:gruposubmats,id',

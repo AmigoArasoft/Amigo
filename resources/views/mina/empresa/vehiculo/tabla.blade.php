@@ -15,7 +15,6 @@
 			        	    <th width="120px">Acción</th>
 			        	@endcanany
 			            <th>Transportadora</th>
-			            <th>Conductor</th>
 			            <th>Placa</th>
 			            <th>Volumen</th>
 			            <th>Marca</th>

@@ -10,7 +10,6 @@ $(document).ready(function() {
     		    {data: 'botones', class: 'text-center', orderable: false},
             @endcanany
     		{data: 'operador', name:'operador.nombre'},
-            {data: 'conductor', name:'conductor.nombre'},
             {data: 'placa', class: 'text-center'},
             {data: 'volumen', class: 'text-right'},
             {data: 'marca'},

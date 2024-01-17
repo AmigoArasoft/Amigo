@@ -41,7 +41,6 @@ function refreshSelectpicker(){
 @if($accion == 'Nuevo')
     document.forma.material_id.value = "";
     document.forma.vehiculo_id.value = "";
-    document.forma.conductor_id.value = "";
     document.forma.operador_id.value = "";
     document.forma.subgrupo_id.value = "";
 @endif
@@ -95,25 +94,9 @@ function cambiaMaterial(valor){
 }
 function cambiaVehiculo(valor){
     if (valor !== '') {
-        x_valor = eval("v_" + valor);
-
         getVehicleCubage(valor);
-
-        mi_valor = eval("tran_" + x_valor[0][0]);
-        num_valor = mi_valor.length;
-        document.forma.conductor_id.length = num_valor;
-        for(i=0;i<num_valor;i++){
-            document.forma.conductor_id.options[i].value = mi_valor[i][0];
-            document.forma.conductor_id.options[i].text = mi_valor[i][1];
-            if(mi_valor[i][0] == x_valor[0][2]){
-                document.forma.conductor_id.options[i].selected = true;
-            }
-        }
     }else{
         document.forma.volumen.value = 1;
-        document.forma.conductor_id.length = 1;
-        document.forma.conductor_id.options[0].value = "";
-        document.forma.conductor_id.options[0].text = "";
     }
     refreshSelectpicker();
 }
@@ -163,10 +146,6 @@ function formSubmit(e){
         return false;
     }
 
-    if(document.forma.conductor_id.value == ""){
-        toastr.error('Conductor no debe estar vacío')
-        return false;
-    }
 
     document.forma.volumen.disabled = false;
     $('#modalCargando').modal("show");

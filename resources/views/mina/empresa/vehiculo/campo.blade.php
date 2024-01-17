@@ -10,17 +10,6 @@
 		    @endif
 		</div>
 	</div>
-	<div class="col-md-3">
-		<div class="form-group">
-			{{ Form::label('conductor_id', 'Conductor:') }}
-			{{ Form::select('conductor_id', $conductor, (!isset($dato)) ? 1 : null, ['class' => $errors->first('conductor_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm  selectpicker', 'data-live-search' => 'true']) }}
-			@if($errors->has('conductor_id'))
-				<div class="invalid-feedback d-block">
-		        	{{ $errors->first('conductor_id') }}
-		      	</div>
-		    @endif
-		</div>
-	</div>
 	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('placa', 'Placa:') }}
