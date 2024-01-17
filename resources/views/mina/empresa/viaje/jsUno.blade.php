@@ -172,7 +172,6 @@ function formSubmit(e){
     $('#modalCargando').modal("show");
 
     setTimeout(() => {
-        $('#modalCargando').modal("hide");
         $("[name=forma]").submit();
     }, 1000);
 }
