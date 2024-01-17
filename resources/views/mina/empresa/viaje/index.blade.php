@@ -8,12 +8,13 @@
 @endsection
 
 @section('contenido')
+	@include('mina.empresa.viaje.modal')
 @isset($accion)
 	@include('mina.empresa.viaje.forma')
 @else
     @include('mina.empresa.viaje.tabla')
-	@include('mina.empresa.viaje.modal')
 @endisset
+
 @endsection
 
 @section('codigo')
