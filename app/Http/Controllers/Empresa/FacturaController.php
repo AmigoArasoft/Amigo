@@ -68,8 +68,11 @@ class FacturaController extends Controller{
         ->join('tarifa_material', 'tarifa_material.material_id', '=', 'materias.id')
         ->join('tercero_tarifa', 'tercero_tarifa.tarifa_id', '=', 'tarifa_material.tarifa_id')
         ->get();
+
+        $tipo_usuario_logueado = Auth::user()->role()->first()->role_id;
+
         return view('mina.empresa.factura.index', ['accion' => 'Nuevo']
-            , compact('operadores', 'operador', 'ope', 'fecha', 'desde', 'hasta', 'viajes')
+            , compact('operadores', 'operador', 'ope', 'fecha', 'desde', 'hasta', 'viajes', 'tipo_usuario_logueado')
         );
     }
 

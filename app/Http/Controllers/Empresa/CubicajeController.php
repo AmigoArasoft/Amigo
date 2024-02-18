@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Cubicaje;
 use App\Models\Tercero;
 use App\Models\Vehiculo;
+use App\Models\Viaje;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -58,7 +59,12 @@ class CubicajeController extends Controller{
         $dato = Cubicaje::findOrFail($id);
         $operadores = Tercero::where('operador', 1)->where('activo', 1)->orderBy('nombre')->get();
         $terceros = $operadores->pluck('nombre', 'id');
-        $vehiculos = $operadores->first()->transportesVehiculos()->get()->sortBy('placa')->pluck('placa', 'id');
+        $vehiculos = [];
+        foreach ($operadores as $operador) {
+            $vehiculosOperador = $operador->transportesVehiculos()->get()->sortBy('placa')->pluck('placa', 'id')->toArray();
+            $vehiculos = $vehiculos[] = $vehiculosOperador;
+        }
+
         return view('mina.empresa.cubicaje.index', ['accion' => 'Editar'], compact('dato', 'operadores', 'terceros', 'vehiculos'));
     }
 
@@ -68,7 +74,17 @@ class CubicajeController extends Controller{
         $dato->fill($request->all())->save();
         $vehiculo = Vehiculo::findOrFail($dato->vehiculo_id);
         $vehiculo->update(['volumen' => $dato->volumen]);
-        return redirect()->route('cubicaje')->with('info', 'Registro actualizado con éxito');
+
+        $viajes = Viaje::where(['vehiculo_id' => $dato->vehiculo_id, 'volumen_manual' => 0])->get();
+        
+        foreach($viajes as $viaje){
+            $viaje->update([
+                'volumen' => $dato->volumen,
+                'total' => $dato->volumen * $viaje->valor
+            ]);
+        }
+
+        return redirect()->route('cubicaje')->with('info', 'Cubicaje actualizado, también se actualizaron todos los precios de los viajes que no fueron modificados su volumen para el vehículo');
     }
 
     public function destroy($id){

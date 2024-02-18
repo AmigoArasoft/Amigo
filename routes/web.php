@@ -112,6 +112,13 @@ Route::prefix('mina')->group(function () {
 		Route::middleware(['permission:Viaje borrar', 'mina'])->group(function () {
 			Route::get('activar/{id}', [ViajeController::class, 'destroy'])->name('viaje.activar');
 		});
+		Route::middleware(['permission:Viaje cambiar volumen', 'mina'])->group(function () {
+			Route::post('cambiarVolumen', [ViajeController::class, 'cambiarVolumen'])->name('cambiar.volumen');
+		});
+
+		Route::post('getOperadorViajeCertificado', [ViajeController::class, 'getOperadorViajeCertificado'])->name('viaje.getOperadorViajeCertificado');
+		Route::get('getOperadores', [ViajeController::class, 'getOperadores'])->name('viaje.getOperadores');
+		Route::post('certificar', [ViajeController::class, 'certificar'])->name('viaje.certificar');
 	});
 	Route::middleware(['guest'])->group(function () {
 		Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');

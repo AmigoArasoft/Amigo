@@ -9,9 +9,16 @@
 	<div class="col-md-3">
 		{{ Form::label('val_1', 'Total de volúmen:') }} {{ number_format($viajes->sum('volumen'), 2, '.', ',') }}
 	</div>
-	<div class="col-md-3">
-		{{ Form::label('val_2', 'Valor total:') }} $ {{ number_format($viajes->sum('total'), 2, '.', ',') }}
-	</div>
+
+	{{-- SUPERADMIN: 1 | OPERADOR: 3 --}}
+	@if (Auth::user()->role->role_id == 1 || Auth::user()->role->role_id == 3)
+		<div class="col-md-3">
+			{{ Form::label('val_2', 'Valor total:') }} $ {{ number_format($viajes->sum('total'), 2, '.', ',') }}
+		</div>
+	@else
+		<div class="col-md-3"></div>
+	@endif
+
 	<div class="col-md-3 text-right">
 		@if ($viajes->sum('total') > 0)
 			@can('Factura crear')
@@ -30,14 +37,17 @@
 			    		<div class="col-md-4"><b>Volúmen: </b></div>
 			   			<div class="col-md-8">{{ number_format($e->volumen, 2, '.', ',') }}</div>
 			   		</div>
-			   		<div class="row">
-			   			<div class="col-md-4"><b>Valor (actual): </b></div>
-			    		<div class="col-md-8">$ {{ number_format($e->valor, 2, '.', ',') }}</div>
-			    	</div>
-			    	<div class="row">
-			   			<div class="col-md-4"><b>Total: </b></div>
-			   			<div class="col-md-8">$ {{ number_format($e->total, 2, '.', ',') }}</div>
-			   		</div>
+					{{-- SUPERADMIN: 1 | OPERADOR: 3 --}}
+					@if (Auth::user()->role->role_id == 1 || Auth::user()->role->role_id == 3)
+						<div class="row">
+							<div class="col-md-4"><b>Valor (actual): </b></div>
+							<div class="col-md-8">$ {{ number_format($e->valor, 2, '.', ',') }}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4"><b>Total: </b></div>
+							<div class="col-md-8">$ {{ number_format($e->total, 2, '.', ',') }}</div>
+						</div>
+					@endif
 			  </div>
 			</div>
 		</div>

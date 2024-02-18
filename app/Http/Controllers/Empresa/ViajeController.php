@@ -36,7 +36,7 @@ class ViajeController extends Controller{
     public function list(Request $request){
         if (!$request->ajax()) return redirect('/');
         return datatables()
-            ->eloquent(Viaje::select('viajes.nro_viaje', 'viajes.id', 'viajes.fecha_nombre as fecha', 'terceros.nombre as operador', 'vehiculos.placa', 'materias.nombre', 'viajes.volumen', 'users.name as digitador', 'viajes.activo')
+            ->eloquent(Viaje::select('viajes.nro_viaje', 'viajes.id', 'viajes.fecha_nombre as fecha', 'terceros.nombre as operador', 'vehiculos.placa', 'materias.nombre', 'viajes.volumen', 'users.name as digitador', 'viajes.activo', 'viajes.volumen_manual', 'viajes.certificado', 'viajes.fecha_certificacion', 'viajes.numero_certificacion')
                 ->where('eliminado', 0)
                 ->when(Auth::user()->tercero_id != 1, function($q){
                     return $q->where('operador_id', Auth::user()->tercero_id);
@@ -46,8 +46,10 @@ class ViajeController extends Controller{
                 ->join('materias', 'viajes.material_id', '=', 'materias.id')
                 ->join('users', 'viajes.user_update_id', '=', 'users.id'))
             ->addColumn('botones', 'mina/empresa/viaje/tablaBoton')
+            ->addColumn('volumen', 'mina/empresa/viaje/tablaBotonVolumen')
             ->addColumn('activo', 'mina/empresa/viaje/tablaActivo')
-            ->rawColumns(['botones', 'activo'])
+            ->addColumn('certificado', 'mina/empresa/viaje/tablaCertificado')
+            ->rawColumns(['botones', 'volumen', 'activo', 'certificado'])
             ->toJson();
     }
 
@@ -276,6 +278,62 @@ class ViajeController extends Controller{
         return response()->json([
             "data" => $getVehicle
         ], 200);
+    }
+
+    public function cambiarVolumen(Request $request){
+        if(!$request->has('id_viaje') || !$request->has('volumen'))
+         return redirect()->back()->with('error', 'Reintente, ha ocurrido un error');
+
+        $viaje = Viaje::where('id', $request->id_viaje)->first();
+        
+        $viaje->update([
+            'volumen' => $request->volumen,
+            'volumen_manual' => true,
+            'total' => $request->volumen * $viaje->valor
+        ]);
+
+        return redirect()->route('viaje')->with('info', 'Volumen del viaje Nro. '.$viaje->id .' ha sido actualizado correctamente');
+    }
+
+    public function getOperadores(){
+        $operadores = Tercero::where('operador', 1)->whereNotNull('frente_id')->where('activo', 1)->orderBy('nombre')->get()->pluck('nombre', 'id');
+
+        if(!$operadores)
+            return response()->json([ "data" => []], 400);
+
+        return response()->json([ 
+            "data" => $operadores
+        ], 200);
+    }
+
+    public function getOperadorViajeCertificado(Request $request){
+        $operadorViajes = Viaje::where('operador_id', $request->operador_id)->where('activo', 1)->where('certificado', 0)->get();
+
+        if(!$operadorViajes)
+            return response()->json([ "data" => false ], 400);
+
+        return response()->json([ 
+            "data" => $operadorViajes
+        ], 200);
+    }
+
+    public function certificar(Request $request){
+        Validator::make($request->all(), [
+            'fecha_certificacion' => 'required|date',
+            'numero_certificacion' => 'required',
+            'viajes_id' => 'required|array'
+        ])->validate();
+
+        $operadorViajes = Viaje::whereIn('id', $request->viajes_id)
+        ->where('activo', 1)
+        ->where('certificado', 0)
+        ->update([
+            'fecha_certificacion' => $request->fecha_certificacion,
+            'numero_certificacion' => $request->numero_certificacion,
+            'certificado' => 1
+        ]);
+
+        return redirect()->route('viaje')->with('info', 'Viajes certificados con éxito');
     }
 
     protected function validator(array $data){

@@ -42,8 +42,10 @@
                         <th>Material</th>
                         <th>Volúmen</th>
                         <th>Nro Vale</th>
-                        <th>Valor</th>
-                        <th>Total</th>
+                        @if (Auth::user()->role->role_id == 1 || Auth::user()->role->role_id == 3)
+                            <th>Valor</th>
+                            <th>Total</th>
+	                    @endif
                     </tr>
                 </thead>
             </table>

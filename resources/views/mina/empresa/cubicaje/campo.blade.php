@@ -24,7 +24,7 @@
 	<div class="col-md-2">
 		<div class="form-group">
 			{{ Form::label('vehiculo_id', 'Vehículo:') }}
-			{{ Form::select('vehiculo_id', $vehiculos, (!isset($dato)) ? 1 : null, ['class' => $errors->first('vehiculo_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true', 'onChange' => 'cambiaVehiculo(this.value)']) }}
+			{{ Form::select('vehiculo_id', $vehiculos, (!isset($dato)) ? 1 : $dato->vehiculo_id, ['class' => $errors->first('vehiculo_id') ? 'form-control form-control-sm is-invalid' : 'form-control form-control-sm selectpicker', 'data-live-search' => 'true', 'onChange' => 'cambiaVehiculo(this.value)']) }}
 			@if($errors->has('vehiculo_id'))
 				<div class="invalid-feedback d-block">
 		        	{{ $errors->first('vehiculo_id') }}

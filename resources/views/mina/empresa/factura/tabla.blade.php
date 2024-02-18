@@ -1,7 +1,7 @@
 <div class="card card-info">
 	<div class="card-header">@yield('titulo')
 		@if(Auth::user()->tercero_id == 1)
-			@can('Viaje crear')
+			@can('Factura crear')
 			    <a class="btn btn-sm btn-default text-dark" href="{{ route('factura.crear') }}">
 					<i class="fas fa-plus-circle"></i> Nuevo
 				</a>
@@ -21,7 +21,9 @@
 			            <th>Operador/Transportador</th>
 			            <th>Desde</th>
 			            <th>Hasta</th>
-			            <th>Valor</th>
+			            @if (Auth::user()->role->role_id == 1 || Auth::user()->role->role_id == 3)
+							<th>Valor</th>
+						@endif
 			            <th>M3</th>
 			            <th>Anulado</th>
 			        </tr>

@@ -9,18 +9,18 @@
 
 @section('contenido')
 	@include('mina.empresa.viaje.modal')
-@isset($accion)
-	@include('mina.empresa.viaje.forma')
-@else
-    @include('mina.empresa.viaje.tabla')
-@endisset
 
+	@isset($accion)
+		@include('mina.empresa.viaje.forma')
+	@else
+		@include('mina.empresa.viaje.tabla')
+	@endisset
 @endsection
 
 @section('codigo')
-@if(!isset($accion))
-	@include('mina.empresa/viaje/js')
-@else
-	@include('mina.empresa/viaje/jsUno')
-@endif
+	@if(!isset($accion))
+		@include('mina.empresa/viaje/js')
+	@else
+		@include('mina.empresa/viaje/jsUno')
+	@endif
 @endsection

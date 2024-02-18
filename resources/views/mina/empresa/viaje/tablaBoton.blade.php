@@ -9,10 +9,10 @@
 	@endif
 @endcan
 @can('Viaje editar')
-	<button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#exampleModal" onclick="changeId({{ $id }}, 'origen')">
-		<i class="fas fa-envelope"></i> Enviar Certificado Origen
+	<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="changeId({{ $id }}, 'origen')">
+		<i class="fas fa-envelope"></i> Certificado origen
 	</button>
 	<button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#exampleModal" onclick="changeId({{ $id }}, 'vale')">
-		<img src="{{ asset('/img/vale.png') }}" style="width:20px;height:20px;"> Enviar Vale
+		<i class="fas fa-file"></i> Vale
 	</button>
 @endcan

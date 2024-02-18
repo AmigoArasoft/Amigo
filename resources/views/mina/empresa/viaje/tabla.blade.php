@@ -6,6 +6,9 @@
 					<i class="fas fa-plus-circle"></i> Nuevo
 				</a>
 			@endcan
+			<a class="btn btn-sm btn-default text-dark" onclick="getOperadores()">
+				<i class="fas fa-truck"></i> Certificar viaje
+			</a>
 		@endif
 	</div>
 	<div class="card-body">
@@ -25,8 +28,10 @@
 			            <th>Vehículo</th>
 			            <th>Material</th>
 			            <th>Volúmen</th>
+			            <th>Volúmen cambiado</th>
 			            <th>Digitador</th>
 			            <th>Activo</th>
+			            <th>Certificado</th>
 			        </tr>
 			    </thead>
 			</table>

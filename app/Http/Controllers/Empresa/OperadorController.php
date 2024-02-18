@@ -70,6 +70,7 @@ class OperadorController extends Controller{
         return datatables()
             ->eloquent(Tercero::findOrFail($id)->tarifas()
                 ->select('id', 'nombre', 'tarifa', 'tercero_id')
+                ->orderBy('tarifa')
             )
             ->addColumn('botones', 'mina/empresa/operador/tablaBotonMaterial')
             ->rawColumns(['botones'])
