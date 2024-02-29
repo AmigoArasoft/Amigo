@@ -12,7 +12,7 @@ use App\Models\Viaje;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-use Barryvdh\DomPDF\Facade as PDF;
+use PDF;
 
 class CubicajeController extends Controller{
     public function __construct(){

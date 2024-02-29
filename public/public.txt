@@ -1,0 +1,1 @@
+Hay que crear la carpeta public para que funcione el DomPDF

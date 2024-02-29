@@ -9,7 +9,7 @@ use App\Models\Factura;
 use App\Models\Tercero;
 use Illuminate\Http\Request;
 use App\Exports\FacturaExport;
-use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
